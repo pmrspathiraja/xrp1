@@ -1,0 +1,198 @@
+﻿@using System.Web
+@using XRP.Domain.Entity
+@using Newtonsoft.Json
+@model IEnumerable<Withdrawal>
+@{
+    Layout = "_Layout";
+}
+<table class="table table-hover table-bordered" id="sampleTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Created Date</th>
+            <th>User ID</th>
+            <th>Transfer Amount</th>
+            <th>Status</th>
+            <th>Bank Details</th>
+            <th>Actions</th>
+ 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var bankJson = JsonConvert.SerializeObject(item.BankAccount);
+            <tr>
+                <td>@item.UId</td>
+                <td>@item.CreatedDate.ToString("f")</td>
+                <td>@item.UserId</td>
+               
+                <td>@item.Amount</td>
+                <td>
+                    @if (item.Approved == 2)
+                    {
+                        <button class="btn btn-success" type="button">Completed</button>
+                    }
+                    else if (item.Approved == 1)
+                    {
+                        <button class="btn btn-primary" type="button">New</button>
+                    }
+                    else if (item.Approved == 3)
+                    {
+                        <button class="btn btn-danger" type="button">Rejected</button>
+                    }
+                </td>
+                <td>
+                    <button onclick='onclickBank(@Html.Raw(bankJson))' data-placement="top" title="View Bank Details" style="margin-bottom:3px" class="btn btn-info" type="button">View Bank Details</button>
+                </td>
+                
+                <td style="display: flex">
+                    @if (item.Approved == 1)
+                    {
+                        <button onclick="onclickApprove(@item.UId)" data-placement="top" style="margin-bottom:3px;margin-right:3px" class="btn btn-success" type="button">Approve</button>
+                        <button onclick="onclickReject(@item.UId)" data-placement="top" style="margin-bottom:3px;margin-right:3px" class="btn btn-danger" type="button">Reject</button>
+                    
+                    }
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="wd_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Bank Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: #f9f9f9;">
+                            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">Field</th>
+                            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px;">Bank Name</td>
+                            <td style="padding: 8px;"><span id="bankname"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Account No</td>
+                            <td style="padding: 8px;"><span id="accno"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Contact</td>
+                            <td style="padding: 8px;"><span id="contact"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Holder Name</td>
+                            <td style="padding: 8px;"><span id="holder"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">UPI</td>
+                            <td style="padding: 8px;"><span id="upi"></span>l</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">IFSC</td>
+                            <td style="padding: 8px;"><span id="ifsc"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px;">Country Code</td>
+                            <td style="padding: 8px;">91</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onclickBank(data) {
+        $('#bankname').text(data.BankName)
+        $('#accno').text(data.AccNo)
+        $('#contact').text(data.ContactNo)
+        $('#holder').text(data.AccHolder)
+        $('#upi').text(data.UPI)
+        $('#ifsc').text(data.IFSC)
+
+        $('#wd_model').modal('show');
+    }
+
+    function onclickApprove(id){
+        $.ajax({
+            url: '/Home/Approve?withdrawalId=' + id,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.success) {
+                    $.notify({
+                        title: "Success -",
+                        message: "Withdraw successfuly approved",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "success"
+                    });
+                    window.setTimeout(function () {
+                        window.location.href = response.redirectUrl;
+                    }, 2000)
+                } else {
+                    $.notify({
+                        title: "Error -",
+                        message: "Withdraw fail",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "danger"
+                    });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function onclickReject(id) {
+        $.ajax({
+            url: '/Home/Reject?withdrawalId=' + id,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.success) {
+                    $.notify({
+                        title: "Success -",
+                        message: "Withdraw successfuly Rejected",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "success"
+                    });
+                    window.setTimeout(function () {
+                        window.location.href = response.redirectUrl;
+                    }, 2000)
+                } else {
+                    $.notify({
+                        title: "Error -",
+                        message: "Rejected fail",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "danger"
+                    });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>

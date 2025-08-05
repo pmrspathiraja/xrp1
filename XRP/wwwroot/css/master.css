@@ -1,0 +1,294 @@
+﻿.btn-margin {
+    margin-left:3px;
+}
+
+.mobile-only1 {
+    display: none !important;
+}
+
+@media (max-width: 1024px) {
+    .mobile-only1 {
+        display: block !important; /* or flex, grid, inline-block, etc. depending on your layout */
+    }
+}
+
+/*@media (max-width: 1030) {
+    .mobile-only1 {
+        display: block !important;*/ /* or flex, grid, inline-block, etc. depending on your layout */
+    /*}
+}*/
+
+
+
+
+.dashboard-summary {
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.booking-count {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.book-now-button {
+    background-color: #5268c9;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.summary-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.summary-card {
+    flex: 1 1 200px;
+    border: 2px solid #ffa726;
+    border-radius: 8px 8px 20px 8px;
+    padding: 20px;
+    text-align: center;
+    min-width: 180px;
+}
+
+.summary-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.summary-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.homepage-hero__qa__tabs {
+    margin-bottom: 24px;
+    min-height: 50px
+}
+
+.info-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 40px 0;
+  flex-wrap: wrap;
+}
+
+.info-card {
+  flex: 1 1 250px;
+  text-align: center;
+  padding: 20px;
+}
+
+.info-card img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 15px;
+}
+
+.info-card h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.info-card p {
+  font-size: 14px;
+  color: #333;
+}
+
+@media (max-width: 699px) {
+    .homepage-hero .tabs {
+        position: relative
+    }
+
+        .homepage-hero .tabs .tabs__wrapper:after {
+            display: none
+        }
+
+        .homepage-hero .tabs .tabs__trigger {
+            display: block
+        }
+
+        .homepage-hero .tabs .tabs__list {
+            background: #fff;
+            border: 0;
+            border-radius: 5px;
+            box-shadow: 0 3px 4px 0 rgba(0,0,0,.03),0 3px 3px -2px rgba(0,0,0,.03),0 1px 8px 0 rgba(0,0,0,.04);
+            display: none;
+            left: 0;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            z-index: 1
+        }
+
+        .homepage-hero .tabs .tabs__list--active {
+            display: block
+        }
+
+        .homepage-hero .tabs .tabs__list__item {
+            display: block;
+            float: none
+        }
+
+        .homepage-hero .tabs .tabs__list__link {
+            color: #353535;
+            display: block;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 5px 13px 7px
+        }
+
+            .homepage-hero .tabs .tabs__list__link.hover, .homepage-hero .tabs .tabs__list__link:hover {
+                background: #ededed;
+                color: #353535
+            }
+
+    .theme--dark .homepage-hero .tabs .tabs__list__link--active, .theme--dark .homepage-hero .tabs .tabs__list__link.active, .theme--light .homepage-hero .tabs .tabs__list__link--active, .theme--light .homepage-hero .tabs .tabs__list__link.active, .theme--light--alt .homepage-hero .tabs .tabs__list__link--active, .theme--light--alt .homepage-hero .tabs .tabs__list__link.active, .theme--medium .homepage-hero .tabs .tabs__list__link--active, .theme--medium .homepage-hero .tabs .tabs__list__link.active {
+        background: #fff;
+        color: #42b0d5;
+        font-weight: 700
+    }
+
+    .homepage-hero .tabs .tabs__list__link:after, .homepage-hero .tabs .tabs__list__link__icon {
+        display: none
+    }
+}
+
+@media (min-width: 700px) {
+    .homepage-hero .tabs {
+        margin-left: -8px;
+        margin-right: -8px
+    }
+
+        .homepage-hero .tabs .tabs__wrapper {
+            overflow: hidden
+        }
+
+        .homepage-hero .tabs .tabs__list {
+            width: 100%
+        }
+}
+
+.homepage-hero .tabs .tabs__list__link {
+    background-color: transparent;
+    border: 0;
+    color: #141414;
+    padding: 6px 8px
+}
+
+    .homepage-hero .tabs .tabs__list__link:hover {
+        background: none
+    }
+
+.homepage-hero .tabs .tabs__list__link--active {
+    color: #141414;
+    font-weight: 400
+}
+
+.homepage-hero .tabs .tabs__list__link:after {
+    height: 2px;
+    left: 8px;
+    right: 8px;
+    width: auto
+}
+
+.homepage-hero .tabs .tabs__wrapper:after {
+    background: #fff;
+    height: 2px
+}
+
+.homepage-hero .tabs .tabs__list {
+    border-bottom-width: 2px
+}
+
+.homepage-hero .tabs .tabs__next, .homepage-hero .tabs .tabs__previous {
+    background: #fff;
+    border-radius: 0
+}
+
+    .homepage-hero .tabs .tabs__next:focus, .homepage-hero .tabs .tabs__previous:focus {
+        outline: none
+    }
+
+    .homepage-hero .tabs .tabs__next:hover, .homepage-hero .tabs .tabs__previous:hover {
+        background: #fff;
+        color: #141414
+    }
+
+        .homepage-hero .tabs .tabs__next:hover svg, .homepage-hero .tabs .tabs__previous:hover svg {
+            fill: #141414
+        }
+
+.homepage-hero__tab-content {
+    display: none
+}
+
+.homepage-hero__tab-content--active {
+    display: block
+}
+
+.homepage-hero__history {
+    display: none
+}
+
+.homepage-hero__history__title {
+    margin-bottom: 4px
+}
+.tabs__trigger {
+    background: none;
+    border: 0;
+    display: none;
+    font-weight: 400;
+    padding: 8px 40px 16px 0;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+    width: 100%
+}
+
+.theme--light .tabs__trigger, .theme--light--alt .tabs__trigger {
+    border-bottom: 2px solid #00243d;
+    color: #141414
+}
+
+.theme--medium .tabs__trigger {
+    border-bottom: 2px solid #00243d;
+    color: #fff
+}
+
+.theme--dark .tabs__trigger {
+    border-bottom: 2px solid #fff;
+    color: #fff
+}
+
+.tabs__trigger__icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.theme--light .tabs__trigger__icon, .theme--light--alt .tabs__trigger__icon {
+    color: #141414
+}
+
+.theme--dark .tabs__trigger__icon, .theme--medium .tabs__trigger__icon {
+    color: #fff
+}

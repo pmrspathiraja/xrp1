@@ -1,0 +1,134 @@
+﻿.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.card {
+    flex: 1 1 calc(30% - 20px);
+    min-width: 250px;
+    max-width: 300px;
+    padding: 24px;
+    border-radius: 16px;
+    color: #111;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+    .card h3 {
+        color: #f5a623;
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-bottom: 8px;
+    }
+
+    .card h4 {
+        font-weight: bold;
+        font-size: 1.1em;
+        margin: 0 0 6px;
+    }
+
+    .card p {
+        margin: 0;
+        font-size: 0.95em;
+    }
+
+    /* Background colors */
+    .card.trial {
+        background: #e6d1f2;
+    }
+
+    .card.sapphire {
+        background: #c7c5f1;
+    }
+
+    .card.silver {
+        background: #d7d7d7;
+    }
+
+    .card.gold {
+        background: #f6d277;
+    }
+
+    .card.diamond {
+        background: #cdb6f5;
+    }
+
+    .card.titanium {
+        background: #b4b4b4;
+    }
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.gauge-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: conic-gradient( #f4a300 0deg 324deg, /* Orange for 0–90% */
+    #31a84b 324deg 360deg /* Green for 90–100% */
+    );
+}
+
+.gauge-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    background: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.score {
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.label {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.info {
+    text-align: left;
+    margin-top: 30px;
+    padding: 20px
+}
+
+    .info h2 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+
+    .info p {
+        font-size: 0.95em;
+        line-height: 1.6;
+    }
+
+@media (max-width: 600px) {
+    .score {
+        font-size: 2.2em;
+    }
+
+    .label {
+        font-size: 1em;
+    }
+
+    .info p {
+        font-size: 0.9em;
+    }
+}

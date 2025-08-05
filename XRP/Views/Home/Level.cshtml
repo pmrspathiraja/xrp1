@@ -1,0 +1,91 @@
+﻿@using XRP.Domain.Entity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model Users
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="~/css/level.css" rel="stylesheet" />
+<div style="margin-top:100px" class="p-page__section theme--light no-print pure-top">
+    <div class="p-page__section__outer">
+        <div class="pure" style="width:100%">
+            <div class="p-section__action-cards p-section__action-cards--3 p-page__section__child">
+                <div class="cards-container">
+                   
+                    <div class="container">
+                        <h1 style="font-size:30px;margin-bottom:15px;">Credit Score : @Model.CreditScore</h1>
+                        <canvas id="myChart" width="400" height="400">
+                           
+                        </canvas>
+
+                        <div class="info">
+                            <h2>Rules</h2>
+                            <p>
+                                Credit score is automatically maintained by the system based on your daily shipments. If a member does not work on any given day, the credit score will decrease accordingly.
+
+                                To be eligible for withdrawal, a minimum credit score of 100 is required.
+                                If the score drops, you will need to increase it manually.
+                            </p>
+                        </div>
+                    </div>
+                    @* <div class="card trial">
+                        <h3>🟡 Maersk</h3>
+                        <h4>Trial Card</h4>
+                        <p>No 1</p>
+                    </div>
+                    <div class="card sapphire">
+                        <h3>🟡 Maersk</h3>
+                        <h4>Sapphire Card</h4>
+                        <p>No 2</p>
+                    </div>
+                    <div class="card silver">
+                        <h3>🟡 Maersk</h3>
+                        <h4>White Silver Card</h4>
+                        <p>No 3</p>
+                    </div>
+                    <div class="card gold">
+                        <h3>🟡 Maersk</h3>
+                        <h4>Gold Card</h4>
+                        <p>No 4</p>
+                    </div>
+                    <div class="card diamond">
+                        <h3>🟡 Maersk</h3>
+                        <h4>Diamond Card</h4>
+                        <p>No 5</p>
+                    </div>
+                    <div class="card titanium">
+                        <h3>🟡 Maersk</h3>
+                        <h4>Titanium Gold Card</h4>
+                        <p>No 6</p>
+                    </div> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const data = {
+        labels: ['My Score', 'Remaining'],
+        datasets: [{
+            label: 'Score',
+            data: [@Model.CreditScore, 100 - @Model.CreditScore],
+            backgroundColor: [
+                'rgb(52, 232, 39)',
+                'rgb(232, 84, 39)',
+            ],
+            hoverOffset: 4
+        }]
+    };
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut', // or 'pie'
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Assets\-\media_sc9\maersk\assets\favicon\ogimage_h-630-w-1200-hash-1B2B15E4B03D69B145E1620E247EF6C9.png" />
+    <None Include="wwwroot\Assets\-\media_sc9\maersk\homepage\images\digital-solutions_1300x840_h-800-w-1280-hash-68A13BE38D630A5BB39DEF03C5ADF693.jpg" />
+    <None Include="wwwroot\Assets\-\media_sc9\maersk\homepage\images\digital-solutions_1920x900_v1_h-900-w-1920-hash-4C3250AB52D85E5BC27E8C1EC02738C9.jpg" />
+    <None Include="wwwroot\Assets\-\media_sc9\maersk\homepage\images\digital-solutions_400x800_v1_h-800-w-400-hash-A0A2110E1C63618128B6AC71F9562A0B.jpg" />
+    <None Include="wwwroot\Assets\-\media_sc9\maersk\insights\trend-maps\trend-map-banner_1300x650_w-1325-hash-E70BC7777EBB5514931D51C630FDC0A8.jpg" />
+    <None Include="wwwroot\Assets\-\media_sc9\maersk\news\press-releases\images\2023\03\warehouse-automation-solution_1024x576_w-1000-hash-58D97F936669E9EFE52DEF42E7BECB69.jpg" />
+    <None Include="wwwroot\Assets\-\media_sc9\maersk\solutions\transportation-services\inland-services\images\inland-services_720x405_v2_w-1000-hash-4C26213B9627532ABE058E2F2AB34491.jpg" />
+    <None Include="wwwroot\Assets\4kLH\_RrR\VXI0\RzBK\pg\X7E5Qr3pm9Xfw99w\WRx-TxkB\akYiMmd\hNF0.js" />
+    <None Include="wwwroot\Assets\akam\13\2a78d214.js" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\css\ma.css" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\css\maeu-slim_v-1.0.9194.19268.20.css" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\favicon_v-1.ico" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\fonts\icons\web\20px\MaerskIcons-20px.eot" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\fonts\icons\web\20px\MaerskIcons-20px.ttf" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\fonts\icons\web\20px\MaerskIcons-20px.woff" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\fonts\icons\web\20px\MaerskIcons-20px_-iefix.eot" />
+    <None Include="wwwroot\Assets\Assets_sc9\Maersk\scripts\main-slim_v-1.0.9194.19268.20.js" />
+    <None Include="wwwroot\Assets\integrated-global-nav\2\loader.js" />
+    <None Include="wwwroot\Assets\mop-rum.js" />
+    <None Include="wwwroot\Assets\portaluser\assets\index-fI0ayhiq.css" />
+    <None Include="wwwroot\Assets\portaluser\assets\Login-B4mQU3ix.js" />
+    <None Include="wwwroot\Assets\portaluser\assets\Logout-CnYETex5.js" />
+    <None Include="wwwroot\Assets\portaluser\assets\Root-5KUohwuB.js" />
+    <None Include="wwwroot\Assets\portaluser\assets\SelectCustomer-BwSi_7fG.js" />
+    <None Include="wwwroot\Assets\scp\visitor-min.js" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\headline\MaerskHeadline-Italic.eot" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\headline\MaerskHeadline-Italic.woff" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\headline\MaerskHeadline-Light.eot" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\headline\MaerskHeadline-Light.woff" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\headline\MaerskHeadline-Regular.eot" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\headline\MaerskHeadline-Regular.woff" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-Bold.eot" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-Bold.woff" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-BoldItalic.eot" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-BoldItalic.woff" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-Italic.eot" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-Italic.woff" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-Regular.eot" />
+    <None Include="wwwroot\Assets\sharedfonts\maeu\text\MaerskText-Regular.woff" />
+    <None Include="wwwroot\Assets\static\752eee92cad4488d1796395f48d13b19892400114f7597.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Partials\" />
+    <Folder Include="wwwroot\Assets\-\media_sc9\maersk\solutions\supply-chain-and-logistics\maersk-customs-services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XRP.DataAccess\XRP.DataAccess.csproj" />
+    <ProjectReference Include="..\XRP.Domain\XRP.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

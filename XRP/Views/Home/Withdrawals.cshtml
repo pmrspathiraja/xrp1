@@ -1,0 +1,336 @@
+﻿@using XRP.Domain.Entity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model Users
+@using Newtonsoft.Json
+<link href="~/css/wi.css" rel="stylesheet" />
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<div style="margin-top:80px" class="p-page__section theme--light  no-print" data-deep-link="ThreeActionCardsContainer" data-r-name="Three Action Cards Container" data-r-ds="Three Action Cards Container - New user support" data-r-rule="true">
+    <div class="p-page__section__outer">
+        <div class="p-page__section__inner ">
+            <div class="p-section__action-cards p-section__action-cards--3  p-page__section__child">
+
+                <div style="text-align: center;" >
+                    <h2 style="font-weight: bold; font-size: 28px;">Withdraw Money </h2>
+                    <p>You can withdraw your money instantly.</p>
+                    <div class="card" style="margin-top: 20px;" id="bank">
+                        <div class="notes-title">Add Bank Details</div>
+                        <form id="withdrawForm" class="bank-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Bank Name</label><br>
+                                    <input id="BankName" type="text" placeholder="Bank Name">
+                                </div>
+                                <div class="form-group" style="margin-top: 0px">
+                                    <label>Account Number</label><br>
+                                    <input id="AccNo" type="text" placeholder="Account Number">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Phone Number</label><br>
+                                    <input id="PhoneNo" type="text" placeholder="Phone Number">
+                                </div>
+                                <div class="form-group" style="margin-top: 0px">
+                                    <label>Holder Name</label><br>
+                                    <input id="HolderName" type="text" placeholder="Holder Name">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>UPI</label><br>
+                                    <input id="UPI" type="text" placeholder="UPI">
+                                </div>
+                                <div class="form-group" style="margin-top: 0px">
+                                    <label>IFSC</label><br>
+                                    <input id="IFSC" type="text" placeholder="IFSC">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="container">
+                        <!-- Left section -->
+                        <div class="card">
+                            <div class="balance-title">
+                                Account Available Balance
+                                <span class="balance-amount">₹@Model.TotalBalance</span>
+                            </div>
+                            <div class="balance-title">
+                                Account Pending Amount
+                                <span class="balance-amount">₹@Model.PendingAmount</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="withdrawAmount">Withdraw Amount</label>
+                                <input id="Amount" type="number" id="withdrawAmount" placeholder="0">
+                            </div>
+                            <button onclick="onclickWidthdraw()" id="withdrawButton">Withdraw</button>
+                        </div>
+                        @{
+                            var session = HttpContextAccessor.HttpContext.Session;
+                            var json = session.GetString("Withdrawals");
+                            var withdrawal = JsonConvert.DeserializeObject<List<Withdrawal>>(json);
+                        }
+
+                        <div class="card">
+                            <div class="notes-title">Withdraw History</div>
+                            <table>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+
+                                @foreach (var width in withdrawal)
+                                {
+                                    <tr>
+                                        <td>@width.CreatedDate</td>
+                                        <td>@width.Amount</td>
+                                        <td>@if (width.Approved == 2)
+                                            {
+                                                <span style="color:green">Approved</span>
+                                            }
+                                            else if (width.Approved == 3)
+                                            {
+                                                <span style="color:red">Rejected</span>
+                                            }
+                                            else if (width.Approved == 1)
+                                            {
+                                                <span style="color:blue">Processing</span>
+                                            }
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </table>
+                        </div>
+
+                        <!-- Right section -->
+                        <div class="card">
+                            <div class="notes-title">Notes</div>
+                            <ul class="notes" style="text-align: left;list-style: none;">
+                                <li>1. Minimum withdrawal amount is 500 Rupees</li>
+                                <li>2. Please bind your own bank accounts correctly.</li>
+                                <li>3. If User enter the bank information wrongly, contact the customer support team on the same time.</li>
+                                <li>4. Withdrawal hours are 10:00 to 22:00 daily</li>
+                                <li>5. The total amount of Balance can withdraw for all users.</li>
+                                <li>6. Maximum 1 hour will take for received withdrawal amount (Time may vary depending on servers of various banks).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="~/assets/toast/js/jquery.toast.js"></script>
+<script>
+    var isUserHasBank = false; // Initialize the variable to false
+    var currentBalance = @Model.TotalBalance
+    var currentPending = @Model.PendingAmount
+
+    $(document).ready(function () {
+        getIsUserHasBank();
+
+       
+
+        
+    });
+
+    function onclickWidthdraw() { 
+        if (localStorage.getItem('bank') === 'false')
+        {
+            let isValid = true;
+
+            // Clear previous highlights
+            $('#withdrawForm input').css('border', '1px solid #ccc');
+
+            $('#withdrawForm input').each(function () {
+                if ($(this).val().trim() === '') {
+                    isValid = false;
+                    $(this).css('border', '1px solid red');
+                }
+            });
+
+            if (!isValid) {
+                $.toast({
+                    heading: 'Validation Error',
+                    text: 'Please fill all the required fields.',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+                return;
+            }
+
+            if ($('#Amount').val() == '') {
+                $.toast({
+                    heading: 'Validation Error',
+                    text: 'Please enter amount',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+                return;
+            }
+
+            if (this.currentPending > 0) {
+                $.toast({
+                    heading: 'Validation Error',
+                    text: 'You have pending withdrawal- wait for approve process',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+            }
+
+            const withdrawalData = {
+
+                BankName: $('#BankName').val(),
+                AccNo: $('#AccNo').val(),
+                ContactNo: $('#PhoneNo').val(),
+                AccHolder: $('#HolderName').val(),
+                UPI: $('#UPI').val(),
+                IFSC: $('#IFSC').val(),
+                Amount: $('#Amount').val(),
+
+            };
+            if ($('#Amount').val() <= this.currentBalance)
+            {
+                $.ajax({
+                    url: '/Home/WithdrawalWithBank',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(withdrawalData),
+                    success: function (response) {
+                        if (response.success) {
+                            $.toast({
+                                heading: 'Success ',
+                                text: 'Your withdrawal was successfully added',
+                                icon: 'success',
+                                position: 'top-right'
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000); // 2000 milliseconds = 2 seconds
+                        } else {
+
+                        }
+                    },
+                    error: function () {
+                        $('#loginError').text('An error occurred. Please try again.').show();
+                    }
+                });
+            }else{
+                $.toast({
+                    heading: 'Error',
+                    text: 'You balance is not enough',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+            }
+            
+           
+        }else{
+            if ($('#Amount').val() == '') {
+                $.toast({
+                    heading: 'Validation Error',
+                    text: 'Please enter amount',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+                return;
+            }
+
+            if (this.currentPending > 0) {
+                $.toast({
+                    heading: 'Validation Error',
+                    text: 'You have pending withdrawal- wait for approve process',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+                return;
+            }
+
+            if ($('#Amount').val() <= this.currentBalance) {
+                // Write new end pints for without bank details
+                const withdrawalData = {
+                    Amount: $('#Amount').val(),
+                };
+                $.ajax({
+                    url: '/Home/WithdrawalWithOutBank',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(withdrawalData),
+                    success: function (response) {
+                        if (response.success) {
+                            $.toast({
+                                heading: 'Success ',
+                                text: 'Your withdrawal was successfully added',
+                                icon: 'success',
+                                position: 'top-right'
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000); // 2000 milliseconds = 2 seconds
+                        } else {
+
+                        }
+                    },
+                    error: function () {
+                        $('#loginError').text('An error occurred. Please try again.').show();
+                    }
+                });
+
+
+            } else {
+                $.toast({
+                    heading: 'Error',
+                    text: 'You balance is not enough',
+                    icon: 'error',
+                    position: 'top-right'
+                });
+            }
+        }
+    }
+
+    function getIsUserHasBank() {
+        $.ajax({
+            url: '/Home/IsUserHasBank',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.success) {
+                    debugger
+                    this.isUserHasBank = response.hasbank;
+                    localStorage.setItem('bank', this.isUserHasBank);
+                    if (this.isUserHasBank == true) {
+                        $("#bank").hide();
+                    }
+                }else {
+                   
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>

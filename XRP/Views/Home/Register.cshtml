@@ -1,0 +1,192 @@
+﻿<link rel="stylesheet" href="~/Assets/Flag/build/css/countrySelect.css">
+<style>
+    container {
+        max-width: 400px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size:30px !important;
+        font-weight:bold !important;
+    }
+
+    .container p {
+        text-align: center;
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+    }
+
+            .form-group input[type="password"] {
+                font-family: "Arial";
+            }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #5268c9;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+        .btn:hover {
+            background-color: #002ab7;
+        }
+
+    .register-link {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+        .register-link a {
+            color: #002ab7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+</style>
+
+<div style="margin-top:80px" class="p-page__section theme--light  no-print" data-deep-link="ThreeActionCardsContainer" data-r-name="Three Action Cards Container" data-r-ds="Three Action Cards Container - New user support" data-r-rule="true">
+    <div class="p-page__section__outer">
+        <div class="p-page__section__inner ">
+            <div class="p-section__action-cards p-section__action-cards--3  p-page__section__child">
+                <div class="p-section__action-cards__row">
+                    <div class="action-card  action-card--with--icon" style="display:block" data-deep-link="TextandButtonsActionCard" data-r-name="Text and Buttons Action Card" data-r-ds="Text and Buttons Action Card - How to get started">
+                        <div class="container">
+                            <h2>Register</h2>
+                            <p>Enter your details below to register your account and get started."</p>
+                            <form id="loginForm">
+                                
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input required type="text" id="username" placeholder="" />
+                                </div>
+                                
+                                <div class="form-group" style="display: flex; gap: 10px;">
+                                    <div style="flex: 1;">
+                                        <input id="country_selector" type="text" class="form-control" placeholder="Country Code" />
+                                    </div>
+                                    <div style="flex: 3;">
+                                        <input required type="text" id="mobileNumber" class="form-control" placeholder="Mobile Number" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input required type="password" id="password" placeholder="" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Confirm Password</label>
+                                    <input required type="password" id="confPassword" placeholder="" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label >Invitation Code</label>
+                                    <input required type="text" id="invitaionCode" placeholder="" />
+                                </div>
+
+                                <div class="" style="display: flex; align-items: center; gap: 8px;">
+                                    <input required type="checkbox" name="agreement" id="agreement" />
+                                    <label for="agreement" style="margin: 0; font-size: 14px;">
+                                        I agree to <span style="color: #002ab7; font-weight: bold;">terms & conditions</span>
+                                    </label>
+                                </div>
+                                <div id="loginError" style="color: red; display: none;"></div>
+                                <button type="submit" class="btn">REGISTER</button>
+                            </form>
+
+                            <div class="register-link">
+                                Not yet Registered? <a href="@Url.Action("Register","Home")">Create An Account</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="~/assets/toast/js/jquery.toast.js"></script>
+<script src="~/assets/flag/build/js/countryselect.js"></script>
+<script>
+    $("#country_selector").countrySelect({
+         defaultCountry: "in",
+        // onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+        // responsiveDropdown: true,
+        preferredCountries: ['in', 'gb', 'us']
+    });
+</script>
+<script>
+    $('#loginForm').submit(function (e) {
+        e.preventDefault();
+
+        const loginData = {
+
+            Username: $('#username').val(),
+            CountryCode: $('#country_selector').val(),
+            MobileNumber: $('#mobileNumber').val(),
+            Password: $('#password').val(),
+            ConfPassword: $('#confPassword').val(),
+            InvitaionCode: $('#invitaionCode').val()
+        };
+
+        $.ajax({
+            url: '/Home/Register',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(loginData),
+            success: function (response) {
+                if (response.success) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'You have successfully registered. A customer care agent will contact you shortly',
+                        showHideTransition: 'slide',
+                        icon: 'success',
+                        position: 'mid-center'
+                    })
+
+                    window.setTimeout(function () {
+                        window.location.href = response.redirectUrl;
+                    }, 4000)
+
+                } else {
+                    $.toast({
+                        heading: 'Error',
+                        text: response.message,
+                        showHideTransition: 'slide',
+                        icon: 'error',
+                        position: 'mid-center'
+                    })
+                }
+            },
+            error: function () {
+                $('#loginError').text('An error occurred. Please try again.').show();
+            }
+        });
+    });
+</script>

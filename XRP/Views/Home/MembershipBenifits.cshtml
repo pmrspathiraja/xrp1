@@ -1,0 +1,66 @@
+﻿@using XRP.Domain.Entity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@model Users
+<link href="~/css/msb.css" rel="stylesheet" />
+<div style="margin-top:100px" class="p-page__section theme--light no-print pure-top">
+    <div class="p-page__section__outer">
+        <div class="pure" style="width:100%">
+            <div class="p-section__action-cards p-section__action-cards--3 p-page__section__child">
+                <div class="cards-container">
+                    <div class="container">
+                        <center> <h2 style="font-weight: bold; font-size: 20px;">About Membership Privileges</h2></center>
+
+                        <!-- Badge Section Starts Here -->
+                        <div class="badge-container" style="display: flex; align-items: center; gap: 16px; padding-top: 16px; flex-wrap: wrap;">
+                            <img src="~/assets/images/logo/1.png" style="width: 80px; height: auto; flex-shrink: 0;" />
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="font-size: 1.2rem; font-weight: bold; color: #333;">Bronze Membership Privileges</div>
+                                <div style="font-size: 0.95rem; color: #666;">Agents with Bronze Membership (Lv : 1) have the opportunity to earn up to 20% commission, & they can receive up to 10% in bonuses if they receive a special shipment in their 18 Shipments</div>
+                            </div>
+                        </div>
+                        <!-- Badge Section Ends Here -->
+                        <!-- Badge Section Starts Here -->
+                        <div class="badge-container" style="display: flex; align-items: center; gap: 16px; padding-top: 16px; flex-wrap: wrap;">
+                            <img src="~/assets/images/logo/2.png" style="width: 80px; height: auto; flex-shrink: 0;" />
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="font-size: 1.2rem; font-weight: bold; color: #333;">Silver Membership Privileges</div>
+                                <div style="font-size: 0.95rem; color: #666;">Agents with Silver Membership (Lv : 2) have the opportunity to earn up to 40% commission, & they can receive up to 20% in bonuses if they receive a special shipment in their 18 Shipments</div>
+                            </div>
+                        </div>
+                        <!-- Badge Section Ends Here -->
+                        <!-- Badge Section Starts Here -->
+                        <div class="badge-container" style="display: flex; align-items: center; gap: 16px; padding-top: 16px; flex-wrap: wrap;">
+                            <img src="~/assets/images/logo/3.png" style="width: 80px; height: auto; flex-shrink: 0;" />
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="font-size: 1.2rem; font-weight: bold; color: #333;">Gold Membership Privileges</div>
+                                <div style="font-size: 0.95rem; color: #666;">Agents with Gold Membership (Lv : 3) have the opportunity to earn up to 60% commission, & they can receive up to 30% in bonuses if they receive a special shipment in their 18 Shipments</div>
+                            </div>
+                        </div>
+                        <!-- Badge Section Ends Here -->
+                        <!-- Badge Section Starts Here -->
+                        <div class="badge-container" style="display: flex; align-items: center; gap: 16px; padding-top: 16px; flex-wrap: wrap;">
+                            <img src="~/assets/images/logo/4.png" style="width: 80px; height: auto; flex-shrink: 0;" />
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="font-size: 1.2rem; font-weight: bold; color: #333;">Platinum Membership Privileges</div>
+                                <div style="font-size: 0.95rem; color: #666;">Agents with Platinum Membership (Lv : 4) have the opportunity to earn up to 80% commission, & they can receive up to 40% in bonuses if they receive a special shipment in their 18 Shipments</div>
+                            </div>
+                        </div>
+                        <!-- Badge Section Ends Here -->
+
+                        <!-- Badge Section Starts Here -->
+                        <div class="badge-container" style="display: flex; align-items: center; gap: 16px; padding-top: 16px; flex-wrap: wrap;">
+                            <img src="~/assets/images/logo/5.png" style="width: 80px; height: auto; flex-shrink: 0;" />
+                            <div style="display: flex; flex-direction: column;">
+                                <div style="font-size: 1.2rem; font-weight: bold; color: #333;">Diamond Membership Privileges</div>
+                                <div style="font-size: 0.95rem; color: #666;">Agents with Diamond Membership (Lv : 5) have the opportunity to earn up to 100% commission, & they can receive up to 50% in bonuses if they receive a special shipment in their 20 Shipments</div>
+                            </div>
+                        </div>
+                        <!-- Badge Section Ends Here -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

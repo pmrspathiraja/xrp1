@@ -1,0 +1,139 @@
+﻿<link href="~/css/myaccount.css" rel="stylesheet" />
+<div class="p-page__section theme--light no-print pure-top">
+    <div class="p-page__section__outer">
+        <div class="pure" style="width:100%">
+            <div class="p-section__action-cards p-section__action-cards--3 p-page__section__child">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <img src="~/assets/images/man-avatar-profile-vector-21372076.jpg" alt="Profile Picture" />
+                        <h2><b><span id="u_user"></span></b></h2>
+                        <p><b>#<span id="u_id">00000</span></b></p>
+                        <button class="upload-button">Upload Profile Picture</button>
+                    </div>
+                    <img src="" />
+                    <div class="profile-body">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <div>+91 <span id="u_phone">00000</span></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Invitation code</label>
+                            <div class="invite-code">
+                                <span><span id="u_invite">00000</span></span>
+                                <button style="background: none; border: none; cursor: pointer;">📋</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group password">
+                            <label>Password</label>
+                            <input  id="password" type="password" value="........." />
+                            <span>🔒</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select id="gender">
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <button onclick="UpdateUserDetails()" class="update-button">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/assets/toast/js/jquery.toast.js"></script>
+<script>
+    $.ajax({
+        url: '/Home/GetUserInfo',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (response) {
+            if (response.success) {
+                debugger
+                $('#u_id').text(response.user.uId);
+                $('#u_phone').text(response.user.contact);
+                $('#u_invite').text(response.user.invitaionCode);
+                $('#password').val(response.user.password);
+                $('#u_user').text(response.user.userName);
+                let gender = response.user.gender;
+
+                if (gender === true) {
+                    $('#gender').val('Male');
+                } else if (gender === false) {
+                    $('#gender').val('Female');
+                } else {
+                    $('#gender').val('Other');
+                }
+                //$('#t_commision').text(response.user.todayCommission);
+
+            } else {
+               
+            }
+        },
+        error: function () {
+
+        }
+    });
+
+
+    // Update user info
+    function UpdateUserDetails() {
+
+        const genderVal = $('#gender').val();
+        let genderBool = null;
+
+        if (genderVal === 'Male') {
+            genderBool = true;
+        } else if (genderVal === 'Female') {
+            genderBool = false;
+        }
+
+        const updateData = {
+            Gender: genderBool,
+            Password: $('#password').val(),
+        };
+
+        $.ajax({
+            url: '/Home/UdpateUserInfoUserNameAndPassword',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(updateData),
+            success: function (response) {
+                if (response.success) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'User details successfully updated',
+                        showHideTransition: 'slide',
+                        icon: 'success',
+                        position: 'mid-center'
+                    });
+                } else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Update failed',
+                        showHideTransition: 'fade',
+                        icon: 'error',
+                        position: 'mid-center'
+                    });
+                }
+            },
+            error: function () {
+                $.toast({
+                    heading: 'Error',
+                    text: 'Failed to update user details',
+                    showHideTransition: 'fade',
+                    icon: 'error',
+                    position: 'mid-center'
+                });
+            }
+        });
+    }
+
+</script>

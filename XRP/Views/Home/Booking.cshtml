@@ -1,0 +1,608 @@
+﻿<link href="~/css/booking.css" rel="stylesheet" />
+<link href="~/css/slider3.css" rel="stylesheet" />
+<style>
+    .header-text{
+        font-weight: bold !important;
+        color: #42b0d5 !important;
+    }
+
+    .owl-nav{
+    display:none !important;
+    }
+
+    .animate-top{
+    position:relative;
+    animation:animatetop 0.4s
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.275);
+}
+
+.modal-content {
+    top:100px;
+  margin: 5% auto;
+  width: 500px;
+  max-width: 90%;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.175);
+  border-radius: .3rem;
+  outline: 0;
+}
+.modal-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+        background: #5268c9;
+}
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    margin-top: 0;
+    font-size: 1.25rem;
+}
+.modal-header .close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    background-color: transparent;
+    border: 0;
+}
+.close:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+
+.modal-body {
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+.modal-body p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.modal-footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+.modal-footer>*{
+    margin: 5px;
+}
+
+/* buttons */
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    cursor: pointer;
+}
+.btn:focus, .btn:hover {
+    text-decoration: none;
+}
+.btn-primary {
+    color: #fff;
+        background-color: #ff003e;
+        border-color: #bd0043;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+.btn-secondary {
+    color: #fff;
+    background-color: #7c8287;
+    border-color: #7c8287;
+}
+.btn-secondary:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<div>
+    <section style="background-image: url('/assets/images/room2.png');" class="relatve bg-center bg-no-repeat bg-cover">
+        <div class="mx-auto w-full px-5 py-16 md:px-10 md:py-24 lg:py-32 ">
+            <div class="bg-black/20  p-4">
+                <div class="mx-auto mb-12 flex lg:flex-row md:flex-row flex-col items-center justify-between w-full  text-left md:mb-16 lg:mb-20">
+                    <div class="lg:w-4/12 md:w-4/12 w-full ml-auto">
+                        <h1 id="booking_title" class="mb-2 text-4xl font-semibold text-white md:text-6xl">Industrial Equipment - China to Mumbai</h1>
+                        <p class="text-white pt-1 text-sm font-semibold">Home / Shipping</p>
+                        <p class="text-white pt-2 text-lg font-semibold">Booking Count: <span id="b_count"></span></p>
+                        <div class="">
+                            <button class="z-0 group relative justify-center box-border appearance-none select-none whitespace-nowrap subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 min-w-20 h-10 text-small gap-2 [&amp;>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none data-[hover=true]:opacity-hover bg-[#39502f] mt-4 flex items-center hover:bg-[#418a21] text-white font-bold py-2 px-4 rounded" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
+                                </svg>
+                                <p class="mx-2 text-sm font-semibold">Ship Now &amp; Earn Rewards</p>
+                            </button>
+                        </div>
+                        <div class="pt-4"><button id="mbtn" class="z-0 group relative inline-flex items-center justify-center box-border appearance-none select-none whitespace-nowrap font-normal subpixel-antialiased overflow-hidden tap-highlight-transparent data-[pressed=true]:scale-[0.97] outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 px-4 min-w-20 h-10 text-small gap-2 rounded-medium [&amp;>svg]:max-w-[theme(spacing.8)] transition-transform-colors-opacity motion-reduce:transition-none data-[hover=true]:opacity-hover bg-[#ffb600] text-white" type="button">Ship now</button></div>
+                    </div>
+                    <div class="lg:w-6/12 md:w-6/12 w-full ml-auto lg:mt-0 md:mt-5 mt-5">
+                        <div class="mx-auto  grid justify-center text-center gap-4 grid-cols-1  md:grid-cols-3">
+                            <div class="relative overflow-hidden rounded-lg border bg-white/10 select-none hover:shadow hover:shadow-teal-200 p-2">
+                                <div class="flex h-[180px] flex-col justify-between rounded-md p-6">
+                                    <div class="">
+                                        <h2 style="margin-bottom:0px !important;padding-bottom:0pc !important" class="font-bold text-lg text-white">Port departure</h2>
+                                    </div>
+                                    <div class="">
+                                        <h3 class="font-bold text-6xl text-white py-5"><span>22</span></h3>
+                                        <div class="flex items-center justify-center">
+                                            <p class="text-sm text-white text-muted-foreground font-semibold">Jul</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-white mx-2 h-auto">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative overflow-hidden rounded-lg border bg-white/10 select-none hover:shadow hover:shadow-teal-200 p-2">
+                                <div class="flex h-[180px] flex-col justify-between rounded-md p-6">
+                                    <div class="">
+                                        <h2 style="margin-bottom:0px !important;padding-bottom:0pc !important" class="font-bold text-lg text-white">Port arrival</h2>
+                                    </div>
+                                    <div class="">
+                                        <h3 class="font-bold text-6xl text-white py-5"><span>24</span></h3>
+                                        <div class="flex items-center justify-center">
+                                            <p class="text-sm text-white text-muted-foreground font-semibold">Jul</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 text-white mx-2 h-auto">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative overflow-hidden rounded-lg border bg-white/10 select-none hover:shadow hover:shadow-teal-200 p-2">
+                                <div class="flex h-[180px] flex-col justify-between rounded-md p-6">
+                                    <div class="">
+                                        <div class="flex items-center justify-center">
+                                            <p class="text-4xl text-white text-muted-foreground font-bold"><span id="cont_count">2000</span></p>
+                                            <p class="font-semibold text-white text-lg ml-2">Containers</p>
+                                        </div>
+                                        <div class="flex items-center pt-5 justify-center">
+                                            <p class="text-4xl text-white text-muted-foreground font-bold"><span id="car_count">5250</span></p>
+                                            <p class="font-semibold text-white text-lg ml-2">Cartoons..</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 bg-white/10 rounded mt-5">
+                            <div class="text-2xl text-center font-bold text-white">
+                                <p>Promotion Code Apply here</p>
+                            </div>
+                            <div class="bg-[#e2b771] my-5 text-center font-sembold py-2 rounded text-white"><a href="">Check Availablity</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="padding-left: 50px;padding-right: 50px">
+    <div class="action-card  action-card--with--icon" style="display:block" >
+            <div class="dashboard-summary">
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-title">Trial Bonus</div>
+                        <div class="summary-value">₹ <span id="t_bonus"></span> </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-title">Balance</div>
+                        <div class="summary-value">₹ <span id="t_balance"></span></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-title">Today commission</div>
+                        <div class="summary-value">₹ <span id="t_commision"></span></div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-title">Pending Amount</div>
+                        <div class="summary-value">₹ <span id="t_pending"></span></div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+    </section>
+
+    <section class="game-section">
+        <h2 class="line-title">Industry sectors</h2>
+        <div class="owl-carousel custom-carousel owl-theme" style="overflow:hidden">
+        
+            <div class="item" style="background-image: url(/assets/images/a1.png);">
+                <div class="item-desc">
+                    <h3>Electronics</h3>
+                    <p>
+                        Devices and components powered by electricity, including consumer gadgets and digital products.
+                    </p>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(/assets/images/a2.png);">
+                <div class="item-desc">
+                    <h3>Industrial Equipment</h3>
+                    <p>
+                        Heavy-duty machinery and tools used in manufacturing, construction, or energy sectors.
+                    </p>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(/assets/images/a3.png);">
+                <div class="item-desc">
+                    <h3>Medical Supplies</h3>
+                    <p>
+                        Products used for healthcare, diagnostics, or treatment, often requiring regulatory compliance.
+                    </p>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(/assets/images/a4.png);">
+                <div class="item-desc">
+                    <h3>Automotive Parts</h3>
+                    <p>
+                        Components used in vehicle manufacturing, maintenance, or repair.
+                    </p>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(/assets/images/a5.png);">
+                <div class="item-desc">
+                    <h3>Home Appliances</h3>
+                    <p>
+                        Electrical or mechanical devices used for household tasks or comfort.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+    <div class="bg-white">
+        <div class="lg:text-6xl md:text-6xl text-4xl pt-10 fon text-black  text-center font-bold">
+            <p class="text-lg md:text-xl text-black lg:text-4xl font-bold lg:text-left md:text-center text-center " style="text-align:center !important">Partners Network</p>
+        </div>
+        <div>
+            <p class="text-sm font-semibold text-gray-500 text-center pt-4 px-2">
+                At One travel Accommodation partner, we are proud to work closely with reputable associations and organisations that share our vision of world-class travel experiences.
+            </p>
+            <p style="text-align: center;">
+                <img width="70%" src="~/assets/images/logictic-logo.jpg" style="display: inline-block;" alt="Logictic Logo" />
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<div id="modalDialog" class="modal">
+    <div class="modal-content animate-top">
+        <div class="modal-header">
+            <h5 class="modal-title" style="color:white !important">Booking Details– Start Now!</h5>
+            <button type="button" class="close">
+                <span aria-hidden="true">x</span>
+            </button>
+        </div>
+        <div class="modal-body" id="modelb">
+            <table class="ck-table-resized">
+                <colgroup>
+                    <col style="width:30%;">
+                    <col style="width:70%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td style="font-weight:bold">Boking Info</td>
+                        <td><span id="b_info"></span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Booking Price</td>
+                        <td>₹ <span style="font-weight:bold" id="b_price">.00</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Order Number</td>
+                        <td><span style="font-weight:bold" id="b_order"></span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Commision</td>
+                        <td>₹ <span style="font-weight:bold" id="b_commision">.00</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Booking Details</td>
+                        <td><span id="b_details"></span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight:bold">Ratings</td>
+                        <td>
+                            <select style="border: 1px solid;border-radius: 5px;padding: 1px;" name="exampleSelect" id="ratings">
+                                <option value="0">Select Rating</option>
+                                <option value="1">Outstanding</option>
+                                <option value="2"> Early delivery, great packaging</option>
+                                <option value="3"> On time, properly packed</option>
+                                <option value="4"> On time and mostly well handled</option>
+                                <option value="5"> Early, professional, flawless service</option>
+
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            @* <button type="button" class="btn btn-secondary close">Close</button> *@
+            <button onclick="BookOrder(this)" type="button" id="bookingbtn" class="btn btn-primary booking">Ship Now</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalDialogWin" class="modal">
+    <div class="modal-content animate-top">
+        <div class="modal-header">
+            <h5 class="modal-title" style="color:white !important">Congratulations! You have won a <span id="pre"></span>% bonus on your deposit.</h5>
+            <button type="button" class="closewin">
+                <span style="color: white;font-size: 20px;font-weight: bold;" aria-hidden="true">x</span>
+            </button>
+        </div>
+        <div class="modal-body" id="modelb">
+            <img src="~/assets/images/hyper-casual-mobile-app-game-dice.png" />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary closewin">Close</button>
+            
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var process = false;
+    var currentBookingId;
+    var isBookingAvailable=false;
+
+    $(".custom-carousel").owlCarousel({
+        autoWidth: true,
+        loop: true,
+        autoplay: true,               // Enable auto scroll
+        autoplayTimeout: 3000,        // Time between scrolls in milliseconds (3s)
+        autoplayHoverPause: true,
+        nav: false,      // Hide arrows
+        dots: false  ,
+        touchDrag:true// Hide dots
+    });
+
+    function generateRandomOrderNumber(length = 16) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+    function generateContainers(length = 4) {
+        const chars = '1234';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    function generateCartoons(length = 4) {
+        const chars = '1234';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    let isBookingInProgress = false;
+
+    function BookOrder(button) {
+        if (isBookingInProgress) return; // Prevent re-entry
+        isBookingInProgress = true;
+        $("#overlay").fadeIn(100);
+        button.style.display = 'none';
+        button.innerText = "Processing...";
+
+        const bookingData = {
+            BookingAllocationId: currentBookingId
+        };
+
+        $.ajax({
+            url: '/Home/BookOrder',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(bookingData),
+            success: function (response) {
+                isBookingInProgress = false;
+
+                if (response.success) {
+                    $('#modalDialog').fadeOut();
+                    FirstBookingLoad();
+                    button.innerText = "Ship Now";
+                    button.style.display = 'inline-block';
+                    $("#overlay").fadeOut(2000);
+                } else {
+                    $('#loginError').text('Booking failed.').show();
+                    button.disabled = false;
+                    button.style.display = 'inline-block';
+                    $("#overlay").fadeOut(2000);
+                }
+            },
+            error: function () {
+                isBookingInProgress = false;
+
+                $('#loginError').text('An error occurred. Please try again.').show();
+                button.style.display = 'inline-block';
+                button.innerText = "Ship Now";
+                $("#overlay").fadeOut(2000);
+            }
+        });
+    }
+
+    function FirstBookingLoad() {
+
+        $.ajax({
+            url: '/Home/GetBookings',
+
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                
+                if (response.success) {
+                    if (response.data.giftPrecentage > 0) { 
+                        var modal = $('#modalDialogWin');
+                        $('#pre').text(response.data.giftPrecentage);
+                        modal.show()
+                    }
+                    
+
+                    $('#booking_title').text(response.data.bookings.title);
+                    $('#t_bonus').text(response.users.levelBonus);
+                    $('#t_balance').text(response.users.totalBalance);
+                    $('#t_commision').text(response.users.todayCommission);
+                    $('#t_pending').text(response.users.pendingAmount);
+                    $('#b_count').text(response.users.bookingCount);
+                    
+                    currentBookingId = response.data.uId;
+
+                    //Booking model
+                    $('#b_info').text(response.data.bookings.title);
+                    $('#b_price').text(response.data.price+".00");
+                    $('#b_commision').text(response.data.commision + ".00");
+                    $('#b_details').text(response.data.bookings.description);
+                    const orderNumber = generateRandomOrderNumber();
+                    $('#b_order').text(orderNumber);
+                    const countcount = generateContainers();
+                    $('#cont_count').text(countcount);
+
+                    const countcar = generateCartoons();
+                    $('#car_count').text(countcar);
+                    $('#ratings').val('0');
+                    $('#bookingbtn').hide();
+                    
+                } else {
+                    
+                    var totalbalance = response.users.totalBalance;
+                    var text = 'Your balance : ' + totalbalance + '';
+
+                    if (response.users.popupMessage != "" && response.users.popupMessage!=null) {
+                        $('#modelb').html('<p><b>' + response.users.popupMessage + '</b><br><span style="color:red"><b>' + text + '</b></span></p>');
+
+                    } else {
+                        $('#modelb').html('<p><b>No bookings available at the moment. For assistance, please reach out to our customer support team. We’re here to help!</b><br><span style="color:red"><b>' + text + '</b></span></p>');
+
+                    }
+
+
+                    $('#bookingbtn').hide();
+                    $('#t_bonus').text(response.users.levelBonus);
+                    $('#t_balance').text(response.users.totalBalance);
+                    $('#t_commision').text(response.users.todayCommission);
+                    $('#t_pending').text(response.users.pendingAmount);
+                    $('#b_count').text(response.users.bookingCount);
+                    const countcount = generateContainers();
+                    $('#cont_count').text(countcount);
+
+                    const countcar = generateCartoons();
+                    $('#car_count').text(countcar);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        
+        $('#bookingbtn').hide();
+
+        // Listen for rating dropdown change
+        $('#ratings').on('change', function () {
+            const selected = $(this).val();
+            if (selected !== "0") {
+                $('#bookingbtn').show();  // Show when valid rating selected
+            } else {
+                $('#bookingbtn').hide();  // Hide again if "Select Rating" is chosen
+            }
+        });
+
+        $(".custom-carousel .item").click(function () {
+            $(".custom-carousel .item").not($(this)).removeClass("active");
+            $(this).toggleClass("active");
+        });
+
+        var modal = $('#modalDialog');
+        var modal1 = $('#modalDialogWin');
+        var btn = $("#mbtn");
+        var span = $(".close");
+        var span1 = $(".closewin");
+        var booking = $(".booking");
+
+        btn.on('click', function () {
+            modal.show();
+        });
+
+        span.on('click', function () {
+            modal.fadeOut();
+        });
+
+        span1.on('click', function () {
+            modal1.fadeOut();
+        });
+
+        $('body').bind('click', function (e) {
+            if ($(e.target).hasClass("modal")) {
+                modal.fadeOut();
+            }
+        });
+
+        FirstBookingLoad();
+        
+    });
+
+
+
+</script>
+
+
+
+<!-- The Modal -->

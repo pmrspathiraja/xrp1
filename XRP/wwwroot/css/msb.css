@@ -1,0 +1,39 @@
+﻿.badge-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 16px;
+    flex-wrap: wrap;
+}
+
+    .badge-container img {
+        width: 80px;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    .badge-container .badge-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .badge-container .badge-desc {
+        font-size: 0.95rem;
+        color: #666;
+    }
+
+@media (max-width: 600px) {
+    .badge-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+        .badge-container img {
+            width: 60px;
+        }
+
+        .badge-container .badge-title {
+            font-size: 1rem;
+        }
+}

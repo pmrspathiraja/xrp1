@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/XRP.Admin/bin
+/XRP.Admin/obj
+/XRP.Admin/Properties
+/XRP.DataAccess/obj/Release/net8.0
+/XRP.DataAccess/obj
+/XRP.Domain/bin
+/XRP.Domain/obj
+/XRP.DataAccess/bin
+/XRP/.vs
+/XRP/bin
+/XRP/obj
+/XRP/Properties/PublishProfiles

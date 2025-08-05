@@ -1,0 +1,633 @@
+﻿@using XRP.Domain.Entity
+@model IEnumerable<Users>
+@{
+    Layout = "_Layout";
+}
+
+<table class="table table-hover table-bordered" id="sampleTable">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Created Date</th>
+            <th>Username</th>
+            <th>Contact</th>
+            <th>Approved</th>
+            <th>Total Balance</th>
+            <th>Pending Amount</th>
+            <th>Total Deposit</th>
+            <th>Total Widthdrawals</th>
+            
+            <th>Invitation Code</th>
+            <th>Level</th>
+            <th>Booking Count</th>
+            
+            <th style="padding-right: 0px !important">Action</th> <!-- Use <th> not <td> in headers -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderByDescending(m=>m.UId))
+        {
+            <tr>
+                <td>@item.UId</td>
+                <td>@item.CreatedDate.ToShortDateString()</td>
+                <td>@item.UserName</td>
+                <td>@item.Contact</td>
+                <td>
+                    @if (item.Active) 
+                    {
+                        <button class="btn btn-success" type="button">Approved</button>
+                    }else
+                    {
+                        <button class="btn btn-danger" type="button">Pending</button>                        
+                    }
+                </td>
+                <td>@item.TotalBalance</td>
+                <td>@item.PendingAmount</td>
+                <td>@item.TotalDeposit</td>
+                <td>@item.TotalWithdraw</td>
+                <td>@item.InvitaionCode</td>
+                <td>@item.Level</td>
+                <td>@item.BookingCount</td>
+                <td style="display: flex">
+                    <button data-placement="top" title="Deposit and Reduse" onclick="onclickWR(@item.TotalBalance, @item.UId, @(item.CreditScore ?? 0), @(item.MemberBenifit ?? 0),'@(item?.PopupMessage?.ToString())')" data-toggle="modal" data-target="#wd_model" style="margin-bottom:3px" class="btn btn-info" type="button"><i class="fa fa-money" aria-hidden="true"></i></button>
+                    <button data-placement="top" title="Reset" onclick="onclickReset(@item.UId)" style="margin-bottom:3px" class="btn btn-danger" type="button"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+                    <button data-placement="top" title="Booking Settings" onclick="onclickAL(@item.UId)" style="margin-bottom:3px" class="btn btn-primary" type="button"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                    <button data-placement="top" onclick="onclickResetPassword(@item.UId)" title="Change Password" style="margin-bottom:3px" data-toggle="modal" data-target="#re_model" class="btn btn-warning" type="button"><i class="fa fa-key" aria-hidden="true"></i></button>
+                    @if (item.Active)
+                    {
+                        <button onclick="onclickLockUser(@item.UId)" data-placement="top" title="Lock User" style="margin-bottom:3px" class="btn btn-success" type="button"><i class="fa fa-lock" aria-hidden="true"></i></button>
+                    }else
+                    {
+                        <button onclick="onclickLockUser(@item.UId)" data-placement="top" title="Unclock User" style="margin-bottom:3px" class="btn btn-danger" type="button"><i class="fa fa-unlock" aria-hidden="true"></i></button>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+   
+    var nav=1;
+    var userId = 0;
+    var userIdRe = 0;
+    function onclickWR(amount,user,credit,benifit,pop) 
+    {
+        if (credit == undefined) {
+            credit = 0;
+        }
+
+        if (benifit == undefined) {
+            benifit = 0;
+        }
+
+        if (pop == undefined) {
+            pop = '';
+        }
+        debugger
+        $('#current_amount').text(amount + ".00");
+        $('#credit_amount').text(credit);
+        $('#benifit_amount').text(benifit);
+        $('#inputPop').val(pop);
+        
+        this.userId = user;
+    }
+    function onclickNav(val)
+    { 
+        this.nav = val;
+    }
+    function onclickSave() {
+        if (nav == 1) {
+            var val1 = document.getElementById("inputWidth").value;
+            if (val1 === '' || val1 <= 0) {
+                return; // Prevent closing the modal
+            } else {
+                $.ajax({
+                    url: '/Home/Deposit?userId=' + userId + '&depositAmount=' + val1,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.success) {
+                            $.notify({
+                                title: "Deposit added success",
+                                message: "Deposit added success",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "success"
+                            });
+                            $('#wd_model').modal('hide');
+                            window.setTimeout(function () {
+                                window.location.href = response.redirectUrl;
+                            }, 2000)
+                        } else {
+                            $.notify({
+                                title: "Deposit added fail",
+                                message: "Deposit added fail",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+                
+            }
+        } else if (nav == 2) {
+            var val2 = document.getElementById("inputRed").value;
+            if (val2 === '' || val2 <= 0) {
+                return; // Prevent closing the modal
+            } else {
+                $.ajax({
+                    url: '/Home/Reduce?userId=' + userId + '&reduceAmount=' + val2,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.success) {
+                            $.notify({
+                                title: "Reduce added success",
+                                message: "Reduce added success",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "success"
+                            });
+                            $('#wd_model').modal('hide');
+                            window.setTimeout(function () {
+                                window.location.href = response.redirectUrl;
+                            }, 2000)
+                        } else {
+                            $.notify({
+                                title: "Reduce added fail",
+                                message: "Reduce added fail",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+           
+        } else if (nav == 3) {
+            var val2 = document.getElementById("inputCredit").value;
+            if (val2 === '' || val2 <= 0) {
+                return; // Prevent closing the modal
+            } else {
+                $.ajax({
+                    url: '/Home/CreditScore?userId=' + userId + '&score=' + val2,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.success) {
+                            $.notify({
+                                title: "Credit score updated - success",
+                                message: "Credit score updated",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "success"
+                            });
+                            $('#wd_model').modal('hide');
+                            window.setTimeout(function () {
+                                window.location.href = response.redirectUrl;
+                            }, 2000)
+                        } else {
+                            $.notify({
+                                title: "Credit score fail",
+                                message: "Credit score fail",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+        } else if (nav == 4) {
+            var val2 = document.getElementById("inputBenifit").value;
+            if (val2 === '' || val2 <= 0) {
+                return; // Prevent closing the modal
+            } else {
+                $.ajax({
+                    url: '/Home/Benifit?userId=' + userId + '&benifit=' + val2,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.success) {
+                            $.notify({
+                                title: "Benifit updated - success",
+                                message: "Benifit updated",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "success"
+                            });
+                            $('#wd_model').modal('hide');
+                            window.setTimeout(function () {
+                                window.location.href = response.redirectUrl;
+                            }, 2000)
+                        } else {
+                            $.notify({
+                                title: "Benifit fail",
+                                message: "Benifit fail",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+        } else if (nav == 5) {
+            var val2 = document.getElementById("inputPop").value;
+            if (val2 === '' || val2 <= 0) {
+                return; // Prevent closing the modal
+            } else {
+                $.ajax({
+                    url: '/Home/Pop?userId=' + userId + '&popMessage=' + val2,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        if (response.success) {
+                            $.notify({
+                                title: "Pop updated - success",
+                                message: "Pop updated",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "success"
+                            });
+                            $('#wd_model').modal('hide');
+                            window.setTimeout(function () {
+                                window.location.href = response.redirectUrl;
+                            }, 2000)
+                        } else {
+                            $.notify({
+                                title: "Pop fail",
+                                message: "Pop fail",
+                                icon: 'fa fa-check'
+                            }, {
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+        }
+    }
+
+    function onclickReset(userId) { 
+        $.ajax({
+            url: '/Home/Reset?userId=' + userId,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.success) {
+                    $.notify({
+                        title: "Successfuly Reset the user",
+                        message: "Successfuly Reset the user",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "success"
+                    });
+                    window.setTimeout(function () {
+                        window.location.href = response.redirectUrl;
+                    }, 2000)
+                } else {
+                    $.notify({
+                        title: "Reset fail",
+                        message: "Reset fail",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "error"
+                    });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function onclickAL(userid) {
+        $.ajax({
+            url: '/Home/Allocations?userId=' + userid,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.success) {
+                    $('#al_model').modal('show');
+
+                    let tableHtml = `
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Price</th>
+                                    <th>Comm.</th>
+                                    <th>Dep Bonus %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                    response.allocations.forEach(function (item, index) {
+                        tableHtml += `
+                            <tr data-uid="${item.uId}">
+                                <td>${index + 1}</td>
+                                <td><input type="number" class="form-control price" value="${item.price}" /></td>
+                                <td><input type="number" class="form-control commision" value="${item.commision}" /></td>
+                                <td><input type="number" class="form-control gift" value="${item.giftPrecentage}" /></td>
+                            </tr>
+                        `;
+                    });
+
+                    tableHtml += `
+                            </tbody>
+                        </table>
+                        <div class="text-end">
+                            <button class="btn btn-primary" id="updateAllBtn" type="button">Update All</button>
+                        </div>
+                    `;
+
+                    $('#al_model .modal-body').html(tableHtml);
+                    $('#al_model').modal('show');
+
+                    // Single update button to handle all rows
+                    $('#updateAllBtn').on('click', function () {
+                        const rows = $('#al_model table tbody tr');
+                        const dataList = [];
+
+                        rows.each(function () {
+                            const row = $(this);
+                            const uId = row.data('uid');
+                            const price = parseFloat(row.find('.price').val());
+                            const commision = parseFloat(row.find('.commision').val());
+                            const gift = parseFloat(row.find('.gift').val());
+
+                            dataList.push({
+                                uId: uId,
+                                price: price,
+                                commision: commision,
+                                giftPrecentage: gift
+                            });
+                        });
+
+                        $.ajax({
+                            url: '/Home/UpdateAllocations',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(dataList),
+                            success: function (response) {
+                                if (response.success) {
+                                    $.notify({
+                                        title: "Success",
+                                        message: "All allocations updated successfully.",
+                                        icon: 'fa fa-check'
+                                    }, { type: "success" });
+
+                                    window.setTimeout(function () {
+                                        window.location.href = response.redirectUrl;
+                                    }, 2000);
+                                } else {
+                                    $.notify({ title: "Failed", message: "Update failed." }, { type: "danger" });
+                                }
+                            },
+                            error: function () {
+                                $.notify({ title: "Error", message: "Server error occurred." }, { type: "danger" });
+                            }
+                        });
+                    });
+
+                } else {
+                    $.notify({
+                        title: "Error",
+                        message: "No bookings allocated for this user - please reset first",
+                        icon: 'fa fa-check'
+                    }, { type: "info" });
+                }
+            },
+            error: function () {
+                $.notify({ title: "Error", message: "Failed to fetch data." }, { type: "danger" });
+            }
+        });
+    }
+
+    function onclickLockUser(userid) {
+        $.ajax({
+            url: '/Home/LockUser?userId=' + userid,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.success) {
+                    $('#al_model').modal('hide');
+                    $.notify({
+                        title: "Successfull - ",
+                        message: "Successfuly changed the user status",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "success"
+                    });
+                    window.setTimeout(function () {
+                        window.location.href = response.redirectUrl;
+                    }, 2000)
+                } else {
+                    $.notify({
+                        title: "Error -",
+                        message: "Error occured",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "error"
+                    });
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function onclickResetPassword(userid){
+       
+        this.userIdRe = userid;
+    }
+
+    function onclickResetPasswordSave() {
+        var password = document.getElementById("repassword").value;
+        if (!password || password.trim() === '') {
+            $.notify({
+                title: "Error -",
+                message: "Please enter password",
+                icon: 'fa fa-check'
+            }, {
+                type: "danger",
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+            return;
+        }
+
+        $.ajax({
+            url: '/Home/ResetPassword?userId=' + userIdRe + '&password=' + password,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (response.success) {
+
+                    $('#re_model').modal('hide');
+                    $.notify({
+                        title: "Success",
+                        message: "Password succesfully changed",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "success"
+                    });
+                    window.setTimeout(function () {
+                        window.location.href = response.redirectUrl;
+                    }, 2000)
+                } else {
+                    $.notify({
+                        title: "Error",
+                        message: "Password change fail",
+                        icon: 'fa fa-check'
+                    }, {
+                        type: "danger"
+                    });
+                }
+            },
+            error: function () {
+
+            }
+        });
+
+    } 
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="wd_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Deposit & Reduce (Total Balance)<span style="color:brown" id="current_amount"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="bs-component">
+                    <ul class="nav nav-tabs">
+                        <li onclick="onclickNav(1)" class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home">Deposit</a></li>
+                        <li onclick="onclickNav(2)" class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile">Reduce</a></li>
+                        <li onclick="onclickNav(3)" class="nav-item"><a class="nav-link" data-toggle="tab" href="#credit">Credit Score-<span style="color:brown" id="credit_amount"></span></a></li>
+                        <li onclick="onclickNav(4)" class="nav-item"><a class="nav-link" data-toggle="tab" href="#benifit">Benifit-<span style="color:brown" id="benifit_amount"></span></a></li>
+                        <li onclick="onclickNav(5)" class="nav-item"><a class="nav-link" data-toggle="tab" href="#pop">Popup<span style="color:brown" id="pop_amount"></span></a></li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade active show" id="home">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                                <input  class="form-control" id="inputWidth" type="number" placeholder="Amount">
+                                <div class="input-group-append"><span class="input-group-text">.00</span></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                                <input class="form-control" id="inputRed" type="number" placeholder="Amount">
+                                <div class="input-group-append"><span class="input-group-text">.00</span></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="credit">
+                            <div class="input-group">                            
+                                <input class="form-control" id="inputCredit" type="number" placeholder="Value">
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="benifit">
+                            <div class="input-group">
+                                <input class="form-control" id="inputBenifit" type="number" placeholder="Value">
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="pop">
+                            <div class="input-group">
+                                <textarea class="form-control" id="inputPop" type="text" placeholder="Value"></textarea>
+                     
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="onclickSave()" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="al_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div style="max-width: 700px !important;" class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Booking allocations settings</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @* <button type="button" class="btn btn-primary">Save changes</button> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="re_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-pane fade active show" id="home">
+                    <div class="input-group">
+                        <input class="form-control" id="repassword" type="text" placeholder="New password">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button onclick="onclickResetPasswordSave()" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

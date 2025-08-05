@@ -1,0 +1,60 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css" />
+@using XRP.Domain.Entity
+@model List<UsersHistory>
+<script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+
+<div style="margin-top:100px" class="p-page__section theme--light no-print pure-top">
+    <div class="p-page__section__outer">
+        <div class="pure" style="width:100%">
+            <div style="padding:20px;overflow:scroll" class="p-section__action-cards p-section__action-cards--3 p-page__section__child">
+                <h1 style="color:darkorange">Account History</h1>
+                <table id="myTable" class="display" style="">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Total Level Bonus</th>
+                            <th>Total Balance</th>
+                            <th>Total Pending Amount</th>
+                            <th>Activated</th>
+                        </tr>
+                    </thead>
+                           
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.UpdatedAt</td>
+                                <td>@item.LevelBonus</td>
+                                <td>@item.TotalBalance</td>
+                                <td>@item.PendingAmount</td>
+                                <td>
+                                    @if (item.Active)
+                                    {
+                                        <span>Active</span>
+                                    }else
+                                    {
+                                         <span>Active</span>
+                                    }
+                                </td>
+                            </tr>
+                            
+                        }
+                      
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            lengthChange: false,
+            searching: false
+        });
+
+    });
+</script>
