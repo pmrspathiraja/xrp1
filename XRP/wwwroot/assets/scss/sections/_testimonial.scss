@@ -1,0 +1,134 @@
+.ul-testimonial {
+    background-color: var(--ul-secondary);
+    position: relative;
+    z-index: 1;
+
+    @include md {
+        padding-bottom: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    &-container {
+        max-width: 1920px;
+        margin: auto;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: url('../img/testimonial-bg.jpg') no-repeat center center/cover fixed;
+        opacity: 10%;
+    }
+
+    &-img {
+        padding-right: clamp(30px, 3.15vw, 60px);
+
+        @include md {
+            padding-right: 0;
+        }
+
+        img {
+            border-radius: 0 999px 999px 0;
+            overflow: hidden;
+
+            @include md {
+                border-radius: 999px 999px 0 0;
+            }
+        }
+    }
+
+    .ul-section-title {
+        color: var(--white);
+    }
+
+    &-slider-pagination {
+        display: flex;
+        gap: clamp(10px, 1.05vw, 20px);
+        margin-top: clamp(20px, 3.15vw, 60px);
+
+        @include xs {
+            justify-content: center;
+        }
+
+        .swiper-pagination-bullet {
+            width: 50px;
+            height: 2px;
+            background-color: #D7D7D7;
+            opacity: 100%;
+            --swiper-pagination-bullet-horizontal-gap: 0;
+            border-radius: 999px;
+
+            &-active {
+                background-color: var(--ul-primary);
+            }
+        }
+    }
+}
+
+.ul-testimony {
+    background-color: var(--white);
+    border-top: 4px solid var(--ul-primary);
+    border-radius: 16px;
+    padding: clamp(25px, 2.63vw, 50px);
+
+    .top {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: clamp(12px, 1.05vw, 20px);
+        margin-bottom: clamp(16px, 1.10vw, 21px);
+    }
+
+    &-reviewer {
+        &-img {
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+
+            img {
+                object-fit: cover;
+                width: clamp(60px, 5.25vw, 100px);
+                aspect-ratio: 1/1;
+            }
+        }
+
+        &-info {
+            flex-grow: 1;
+            align-self: center;
+        }
+
+        &-name {
+            font-weight: bold;
+            font-size: clamp(16px, 1.05vw, 20px);
+            margin-bottom: clamp(5px, 0.42vw, 8px);
+        }
+
+        &-role {
+            font-weight: normal;
+            font-size: clamp(13px, 0.84vw, 16px);
+            color: var(--ul-gray2);
+            margin-bottom: clamp(5px, 0.42vw, 8px);
+        }
+    }
+
+    &-rating {
+        color: #FFA41B;
+        display: flex;
+        gap: 5px;
+    }
+
+    &-quotation-icon {
+        @include xxs {
+            display: none;
+        }
+    }
+
+    &-txt {
+        font-size: clamp(13px, 0.84vw, 16px);
+        color: var(--ul-secondary);
+        margin-bottom: 0;
+    }
+}
