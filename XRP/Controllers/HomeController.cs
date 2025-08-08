@@ -166,7 +166,7 @@ namespace XRP.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             // 🚀 Redirect to login page or homepage
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
         public IActionResult Privacy()
         {

@@ -52,16 +52,28 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     // header search in mobile start
     const ulHeaderSearchOpener = document.querySelector(".ul-header-search-opener");
+    const ulHeaderSearchOpener1 = document.querySelector(".ul-header-search-opener1");
     const ulHeaderSearchCloser = document.querySelector(".ul-search-closer");
+    const ulHeaderSearchCloser1 = document.querySelector(".ul-search-closer1");
     if (ulHeaderSearchOpener) {
         ulHeaderSearchOpener.addEventListener("click", () => {
             document.querySelector(".ul-search-form-wrapper").classList.add("active");
+        });
+    }
+    if (ulHeaderSearchOpener1) {
+        ulHeaderSearchOpener1.addEventListener("click", () => {
+            document.querySelector(".ul-search-form-wrapper1").classList.add("active");
         });
     }
 
     if (ulHeaderSearchCloser) {
         ulHeaderSearchCloser.addEventListener("click", () => {
             document.querySelector(".ul-search-form-wrapper").classList.remove("active");
+        });
+    }
+    if (ulHeaderSearchCloser1) {
+        ulHeaderSearchCloser1.addEventListener("click", () => {
+            document.querySelector(".ul-search-form-wrapper1").classList.remove("active");
         });
     }
     // header search in mobile end

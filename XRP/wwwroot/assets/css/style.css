@@ -655,6 +655,57 @@ button {
     padding: 10px clamp(18px, 1.31vw, 25px);
   }
 }
+
+
+.ul-search-form-wrapper1 {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    inset: 0;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.3s ease;
+    flex-direction: column;
+    gap: 20px;
+    backdrop-filter: blur(25px);
+}
+
+    .ul-search-form-wrapper1.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .ul-search-form-wrapper1 .ul-header-search-form {
+        background-color: var(--white);
+        max-width: 80%;
+    }
+
+@media screen and (max-width: 575px) {
+    .ul-search-form-wrapper1 .ul-header-search-form {
+        max-width: 95%;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .ul-search-form-wrapper1 .ul-header-search-form {
+        flex-direction: column;
+        border-radius: 10px;
+        height: auto;
+    }
+
+        .ul-search-form-wrapper1 .ul-header-search-form .ss-main {
+            padding: 10px clamp(12px, 1.05vw, 20px);
+        }
+
+    .ul-search-form-wrapper1 .ul-header-search-form-right {
+        padding: 10px clamp(18px, 1.31vw, 25px);
+    }
+}
+
+
 .ul-search-closer {
   color: var(--ul-primary);
   border: 1px solid var(--white);

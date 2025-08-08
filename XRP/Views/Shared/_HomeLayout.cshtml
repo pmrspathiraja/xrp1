@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -16,20 +17,67 @@
     <link href="~/assets/toast/css/jquery.toast.css" rel="stylesheet" />
     <!-- custom CSS -->
     <link rel="stylesheet" href="~/assets/css/style.css">
+
+    <style>
+        .ul-search-closer1 {
+            color: var(--ul-primary);
+
+            border: 1px solid var(--white);
+            border-radius: 50%;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
+
+            i {
+                display: inline-flex;
+                font-size: clamp(20px, 1.31vw, 25px);
+            }
+
+            &:hover {
+                background-color: var(--white);
+            }
+        }
+
+        .ul-header-nav .ul-header-actions button {
+            background-color: #7065f0; /* black background */
+            color: #fff; /* white icon/text */
+            border: none; /* no border */
+            border-radius: 50%; /* round shape */
+            width: 40px; /* size of circle */
+            height: 40px;
+            display: flex; /* center icon/number */
+            align-items: center;
+            justify-content: center;
+            cursor: pointer; /* pointer on hover */
+            font-size: 16px; /* adjust icon size */
+        }
+
+            .ul-header-nav .ul-header-actions button i {
+                font-size: 18px; /* icon size */
+            }
+    </style>
 </head>
 
 <body>
+    @{
+        var SessionUId = HttpContextAccessor.HttpContext!.Session.GetString("UId");
+        var SessionUsername = HttpContextAccessor.HttpContext!.Session.GetString("UserName");
+        var SessionBenifit = HttpContextAccessor.HttpContext!.Session.GetString("Benifit");
+
+    }
     <div class="preloader" id="preloader">
         <div class="loader"></div>
     </div>
 
     <!-- SIDEBAR SECTION START -->
-    <div class="ul-sidebar">
+    <div id="side_bar" class="ul-sidebar">
         <!-- header -->
         <div class="ul-sidebar-header">
             <div class="ul-sidebar-header-logo">
                 <a href="index.html">
-                    <img src="~/assets/img/logo-dark.svg" alt="logo" class="logo">
+                    <img src="~/assets/img/logo-dark.png" alt="logo" class="logo">
                 </a>
             </div>
             <!-- sidebar closer -->
@@ -168,10 +216,10 @@
         </div>
     </div>
     <!-- SIDEBAR SECTION END -->
-    <!-- SEARCH MODAL SECTION START -->
+    <!-- Login MODAL SECTION START -->
     <form style="all:unset" id="loginForm">
     <div class="ul-search-form-wrapper flex-grow-1 flex-shrink-0">
-        <button class="ul-search-closer"><i class="flaticon-close"></i></button>
+        <div class="ul-search-closer"><i class="flaticon-close"></i></div>
         
             <div action="#" class="ul-search-form">
                 <div class="ul-search-form-right">
@@ -191,7 +239,58 @@
         
     </div>
     </form>
-    <!-- SEARCH MODAL SECTION END -->
+    <!-- Login MODAL SECTION END -->
+
+
+    <!-- Register MODAL SECTION START -->
+    <form style="all:unset" id="registrationForm">
+        <div class="ul-search-form-wrapper1 flex-grow-1 flex-shrink-0">
+            <div class="ul-search-closer1"><i class="flaticon-close"></i></div>
+
+            <div action="#" class="ul-search-form">
+                <div class="ul-search-form-right">
+                    <input required id="username" type="text" placeholder="Username">
+                </div>
+
+            </div>
+            <div action="#" class="ul-search-form">
+                <div class="ul-search-form-right">
+                    <input required id="mobileNumber" type="text" placeholder="Contact No">
+                </div>
+            </div>
+            <div action="#" class="ul-search-form">
+                <div class="ul-search-form-right">
+                    <input required id="password1" type="password" placeholder="Password">
+                </div>
+            </div>
+            <div action="#" class="ul-search-form">
+                <div class="ul-search-form-right">
+                    <input required id="confPassword" type="password" placeholder="Re-Password">
+                </div>
+            </div>
+            <div action="#" class="ul-search-form">
+                <div class="ul-search-form-right">
+                    <input required id="invitaionCode" type="text" placeholder="Invitataion Code">
+                </div>
+            </div>
+            <div action="#" class="">
+                <div class="">
+                    <input required name="agreement" id="agreement" type="checkbox" placeholder="Invitataion Code">
+                    <label for="agreement" style="margin: 0; font-size: 14px; color:white">
+                        I agree to <span style="color: #002ab7; font-weight: bold;">terms & conditions</span>
+                    </label>
+                </div>
+            </div>
+            <div id="loginError" style="color: red; display: none;"></div>
+            <button type="submit" class="ul-btn">Register</button>
+
+        </div>
+    </form>
+    <!-- Register MODAL SECTION END -->
+
+
+
+
     <!-- HEADER SECTION START -->
     <header class="ul-header ul-header--home">
         <div class="ul-header-bottom">
@@ -199,8 +298,13 @@
                 <!-- header left -->
                 <div class="header-bottom-left">
                     <div class="logo-container">
-                        <a href="@Url.Action("Index","Home")" class="d-inline-block"><img src="~/assets/img/logo.svg" alt="logo" class="logo"></a>
+                        <a href="@Url.Action("Index","Home")" class="d-inline-block"><img src="~/assets/img/logo.png" alt="logo" class="logo"></a>
+                       
                     </div>
+                    @if (SessionUId != null)
+                    {
+                        <span style="padding-top: 0px;color: #ffffff;font-size: 14px;">@SessionUsername</span>
+                    }
                 </div>
 
                 <!-- header nav -->
@@ -209,34 +313,63 @@
                         <nav class="ul-header-nav">
                             <a href="@Url.Action("Index","Home")">Home</a>
                             <a href="@Url.Action("Index","Home")">About</a>
-                            <div class="has-sub-menu">
-                                <a role="button">Wallet</a>
+                            @if (SessionUId != null)
+                            {
+                                <div class="has-sub-menu">
+                                    <a role="button">Wallet</a>
 
-                                <div class="ul-header-submenu">
-                                    <ul>
-                                        <li><a href="@Url.Action("Index","Home")">Daily reservations</a></li>
-                                        <li><a href="@Url.Action("Index","Home")">History</a></li>
-                                        <li><a href="@Url.Action("Index","Home")">Withdrawal</a></li>
-                                    </ul>
+                                    <div class="ul-header-submenu">
+                                        <ul>
+                                            <li><a href="@Url.Action("Index","Home")">Daily reservations</a></li>
+                                            <li><a href="@Url.Action("Index","Home")">History</a></li>
+                                            <li><a href="@Url.Action("Index","Home")">Withdrawal</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <a href="@Url.Action("Index","Home")">Events</a>
-                            <a href="@Url.Action("Index","Home")">How it works</a>
-                            <a href="@Url.Action("Index","Home")">Member's area</a>
-                            <a href="@Url.Action("Index","Home")">Help</a>
+                                <a href="@Url.Action("Index","Home")">Events</a>
+                                <a href="@Url.Action("Index","Home")">How it works</a>
+                                <a href="@Url.Action("Index","Home")">Member's area</a>
+                                <a href="@Url.Action("Index","Home")">Help</a>
+                            }
                             <a href="@Url.Action("Index","Home")">Privacy and policy</a>
                             <a href="@Url.Action("Index","Home")">Contact</a>
-                            <a style="cursor:default" class="ul-header-search-opener">Login</a>
-                            
+                            @if (SessionUId != null)
+                            {
+                                <a href="@Url.Action("Logout","Home")">Logout</a>
+                                <div class="ul-header-actions">
+                                <button>
+                                    <i class="flaticon-price-tag"></i>
+                                </button>
+                                <button>
+                                    @SessionBenifit
+                                </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <a id="open_model" class="ul-header-search-opener">Login</a>
+                                <a id="open_model1" class="ul-header-search-opener1">Register</a>
+                               
+                            }
                         </nav>
                     </div>
                 </div>
 
                 <!-- actions -->
                 <div class="ul-header-actions">
-                    @* <button class="ul-header-search-opener"><i class="flaticon-search"></i></button> *@
-                    <button><i class="flaticon-user"></i></button>
-                    <a href="#" class="add-property-btn d-xxs-none"><i class="flaticon-home"></i> Add Property</a>
+                    @if (SessionUId != null)
+                    {
+                    @* <button>
+                        <i class="flaticon-price-tag"></i>
+                    </button>
+                    <button>
+                        @SessionBenifit
+                    </button>
+                    <button>
+                        <i class="flaticon-user"></i>
+                    </button> *@
+                    }
+                    @* <a href="#" class="add-property-btn d-xxs-none"><i class="flaticon-home"></i> Add Property</a> *@
                     <button class="ul-header-sidebar-opener"><i class="flaticon-menu-button"></i></button>
                 </div>
 
@@ -554,7 +687,7 @@
         </section>
         <!-- WHY CHOOSE US SECTION END -->
         <!-- PROPERTY FILTER SEARCH SECTION START -->
-        <section class="ul-property-filter-search ul-section-spacing pt-0">
+       @*  <section class="ul-property-filter-search ul-section-spacing pt-0">
             <div class="ul-property-filter-search-container">
                 <h3 class="ul-property-filter-search-title text-center wow animate__fadeInUp">Search Your Property</h3>
                 <form action="#" class="ul-property-filter-search-form wow animate__fadeInUp">
@@ -589,7 +722,7 @@
                     <button type="submit"><span class="icon"><i class="flaticon-search"></i></span> Search</button>
                 </form>
             </div>
-        </section>
+        </section> *@
         <!-- PROPERTY FILTER SEARCH SECTION END -->
         <!-- FEATURED PROPERTIES SECTION START -->
         <section class="ul-featured-properties ul-section-spacing">
@@ -832,7 +965,7 @@
         </section>
         <!-- FEATURED PROPERTIES SECTION END -->
         <!-- FACILITY SECTION START -->
-        <section class="ul-facilities ul-section-spacing">
+       @*  <section class="ul-facilities ul-section-spacing">
             <div class="ul-container">
                 <div class="row ul-bs-row row-cols-lg-2 row-cols-1 wow animate__fadeInUp">
                     <!-- text -->
@@ -892,10 +1025,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> *@
         <!-- FACILITY SECTION END -->
         <!-- PROPERTIES SECTION START -->
-        <section class="ul-properties ul-section-spacing">
+      @*   <section class="ul-properties ul-section-spacing">
             <div class="ul-container">
                 <!-- section heading -->
                 <div class="ul-section-heading text-center justify-content-center wow animate__fadeInUp">
@@ -1634,7 +1767,7 @@
                     <a href="projects.html" class="ul-btn ul-properties-btn">Browse More Properties</a>
                 </div>
             </div>
-        </section>
+        </section> *@
         <!-- PROPERTIES SECTION END -->
         <!-- STATS SECTION START -->
         <div class="ul-stats ul-section-spacing">
@@ -1781,7 +1914,7 @@
         </section>
         <!-- TESTIMONIAL SECTION END -->
         <!-- BLOG SECTION START -->
-        <section class="ul-blogs ul-section-spacing">
+  @*       <section class="ul-blogs ul-section-spacing">
             <div class="ul-container wow animate__fadeInUp">
                 <!-- section heading -->
                 <div class="ul-section-heading">
@@ -1871,7 +2004,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> *@
         <!-- BLOG SECTION END -->
         <!-- PARTNERS AREA START -->
         <div class="ul-partners-area">
@@ -1914,7 +2047,7 @@
         </div>
         <!-- PARTNERS AREA END -->
         <!-- APP AD SECTION START -->
-        <div class="ul-app-ad wow animate__fadeInUp">
+      @*   <div class="ul-app-ad wow animate__fadeInUp">
             <div class="ul-app-ad-container">
                 <div class="ul-app-ad-content">
                     <div class="row align-items-start gy-5">
@@ -1963,7 +2096,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> *@
         <!-- APP AD SECTION END -->
     </main>
 
@@ -1975,14 +2108,14 @@
                     <!-- <div class="row ul-bs-row"> -->
                     <!-- <div class="col-4"> -->
                     <div class="ul-footer-about">
-                        <a href="index.html"><img src="~/assets/img/logo-dark.svg" alt="logo"></a>
+                        <a href="index.html"><img src="~/assets/img/logo-dark.png" alt="logo"></a>
                         <p class="ul-footer-about-txt">over 1 million+ homes for sale available on the website, we can match you with a house you will want to call home.</p>
-                        <div class="ul-footer-socials">
+                       @*  <div class="ul-footer-socials">
                             <a href="#"><i class="flaticon-facebook"></i></a>
                             <a href="#"><i class="flaticon-instagram"></i></a>
                             <a href="#"><i class="flaticon-twitter"></i></a>
                             <a href="#"><i class="flaticon-linkedin"></i></a>
-                        </div>
+                        </div> *@
                     </div>
                     <!-- </div> -->
                     <!-- <div class="col-7"> -->
@@ -2056,7 +2189,7 @@
 
         <!-- footer bottom -->
         <div class="ul-footer-bottom">
-            <p class="copyright-txt">&copy;2024 Realestics. All rights reserved</p>
+            <p class="copyright-txt">&copy;2025 L&T. All rights reserved</p>
         </div>
 
         <!-- vector -->
@@ -2085,6 +2218,15 @@
     <script src="~/assets/toast/js/jquery.toast.js"></script>
     <script>
 
+        $(document).ready(function () {
+            $('#close_model').on('click', function () {
+                $('#side_bar').removeClass('active');
+            });
+             $('#close_model1').on('click', function () {
+                $('#side_bar').removeClass('active');
+            });
+        });
+
         $('#loginForm').submit(function (e) {
             e.preventDefault();
 
@@ -2112,6 +2254,55 @@
                         window.setTimeout(function () {
                             window.location.href = response.redirectUrl;
                         }, 1500)
+
+                    } else {
+                        $.toast({
+                            heading: 'Error',
+                            text: response.message,
+                            showHideTransition: 'slide',
+                            icon: 'error',
+                            position: 'mid-center'
+                        })
+                    }
+                },
+                error: function () {
+                    $('#loginError').text('An error occurred. Please try again.').show();
+                }
+            });
+        });
+
+
+        $('#registrationForm').submit(function (e) {
+            e.preventDefault();
+
+            const loginData = {
+
+                Username: $('#username').val(),
+                CountryCode: '0',
+                MobileNumber: $('#mobileNumber').val(),
+                Password: $('#password1').val(),
+                ConfPassword: $('#confPassword').val(),
+                InvitaionCode: $('#invitaionCode').val()
+            };
+
+            $.ajax({
+                url: '/Home/Register',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(loginData),
+                success: function (response) {
+                    if (response.success) {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'You have successfully registered. A customer care agent will contact you shortly',
+                            showHideTransition: 'slide',
+                            icon: 'success',
+                            position: 'mid-center'
+                        })
+
+                        window.setTimeout(function () {
+                            window.location.href = response.redirectUrl;
+                        }, 4000)
 
                     } else {
                         $.toast({

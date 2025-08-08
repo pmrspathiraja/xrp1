@@ -460,7 +460,6 @@
             background-color: var(--white);
             max-width: 80%;
         }
-
         // }
 
         @include xs {
@@ -550,14 +549,89 @@
                     display: inline-flex;
 
                     @include xs {
-
                         padding-top: 5px;
                     }
                 }
             }
         }
     }
+
+    &-form-wrapper1 {
+        // @include xl {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.5);
+        inset: 0;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        opacity: 0;
+        transition: 0.3s ease;
+        flex-direction: column;
+        gap: 20px;
+        backdrop-filter: blur(25px);
+
+        &.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .ul-header-search-form {
+            background-color: var(--white);
+            max-width: 80%;
+        }
+        // }
+
+        @include xs {
+            .ul-header-search-form {
+                max-width: 95%;
+            }
+        }
+
+        @include xxs {
+            .ul-header-search-form {
+                flex-direction: column;
+                border-radius: 10px;
+                height: auto;
+
+                .ss-main {
+                    padding: 10px clamp(12px, 1.05vw, 20px);
+                }
+            }
+
+            .ul-header-search-form-right {
+                padding: 10px clamp(18px, 1.31vw, 25px);
+            }
+        }
+    }
+
+   /* &-closer1{
+        // position: absolute;
+        // top: 30%;
+        color: var(--ul-primary);
+        // left: 50%;
+        // transform: translateX(-50%);
+        border: 1px solid var(--white);
+        border-radius: 50%;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+
+        i {
+            display: inline-flex;
+            font-size: clamp(20px, 1.31vw, 25px);
+        }
+
+        &:hover {
+            background-color: var(--white);
+        }
+    }*/
 }
+
+
 
 // progress bar
 .ul-progress {
