@@ -18,7 +18,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options =>
         {
-            options.LoginPath = "/Home/Login"; // redirect if not authenticated
+            options.LoginPath = "/Home/Index"; // redirect if not authenticated
             options.LogoutPath = "/Home/Logout";
             options.AccessDeniedPath = "/Home/AccessDenied"; // optional
             options.ExpireTimeSpan = TimeSpan.FromHours(1); // cookie expiration

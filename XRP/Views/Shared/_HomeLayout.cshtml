@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realestics - Real Estate HTML Template</title>
+    <title>Larsen & Toubro (L&T)</title>
     
     <!-- libraries CSS -->
     <link href="~/assets/icon/flaticon_real_estate.css" rel="stylesheet" />
@@ -292,94 +292,7 @@
 
 
     <!-- HEADER SECTION START -->
-    <header class="ul-header ul-header--home">
-        <div class="ul-header-bottom">
-            <div class="ul-header-bottom-wrapper">
-                <!-- header left -->
-                <div class="header-bottom-left">
-                    <div class="logo-container">
-                        <a href="@Url.Action("Index","Home")" class="d-inline-block"><img src="~/assets/img/logo.png" alt="logo" class="logo"></a>
-                       
-                    </div>
-                    @if (SessionUId != null)
-                    {
-                        <span style="padding-top: 0px;color: #ffffff;font-size: 14px;">@SessionUsername</span>
-                    }
-                </div>
-
-                <!-- header nav -->
-                <div class="ul-header-nav-wrapper">
-                    <div class="to-go-to-sidebar-in-mobile">
-                        <nav class="ul-header-nav">
-                            <a href="@Url.Action("Index","Home")">Home</a>
-                            <a href="@Url.Action("Index","Home")">About</a>
-                            @if (SessionUId != null)
-                            {
-                                <div class="has-sub-menu">
-                                    <a role="button">Wallet</a>
-
-                                    <div class="ul-header-submenu">
-                                        <ul>
-                                            <li><a href="@Url.Action("Index","Home")">Daily reservations</a></li>
-                                            <li><a href="@Url.Action("Index","Home")">History</a></li>
-                                            <li><a href="@Url.Action("Index","Home")">Withdrawal</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <a href="@Url.Action("Index","Home")">Events</a>
-                                <a href="@Url.Action("Index","Home")">How it works</a>
-                                <a href="@Url.Action("Index","Home")">Member's area</a>
-                                <a href="@Url.Action("Index","Home")">Help</a>
-                            }
-                            <a href="@Url.Action("Index","Home")">Privacy and policy</a>
-                            <a href="@Url.Action("Index","Home")">Contact</a>
-                            @if (SessionUId != null)
-                            {
-                                <a href="@Url.Action("Logout","Home")">Logout</a>
-                                <div class="ul-header-actions">
-                                <button>
-                                    <i class="flaticon-price-tag"></i>
-                                </button>
-                                <button>
-                                    @SessionBenifit
-                                </button>
-                                </div>
-                            }
-                            else
-                            {
-                                <a id="open_model" class="ul-header-search-opener">Login</a>
-                                <a id="open_model1" class="ul-header-search-opener1">Register</a>
-                               
-                            }
-                        </nav>
-                    </div>
-                </div>
-
-                <!-- actions -->
-                <div class="ul-header-actions">
-                    @if (SessionUId != null)
-                    {
-                    @* <button>
-                        <i class="flaticon-price-tag"></i>
-                    </button>
-                    <button>
-                        @SessionBenifit
-                    </button>
-                    <button>
-                        <i class="flaticon-user"></i>
-                    </button> *@
-                    }
-                    @* <a href="#" class="add-property-btn d-xxs-none"><i class="flaticon-home"></i> Add Property</a> *@
-                    <button class="ul-header-sidebar-opener"><i class="flaticon-menu-button"></i></button>
-                </div>
-
-                <!-- sidebar opener -->
-                <div class="d-none">
-                    <button class="ul-header-sidebar-opener"><i class="flaticon-menu-button"></i></button>
-                </div>
-            </div>
-        </div>
-    </header>
+    @Html.Partial("_Navigation1")
     <!-- HEADER SECTION END -->
 
 

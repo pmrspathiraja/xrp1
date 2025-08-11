@@ -179,8 +179,14 @@ namespace XRP.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [Authorize]
+        //[Authorize]
         public IActionResult About()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Work()
         {
             return View();
         }
