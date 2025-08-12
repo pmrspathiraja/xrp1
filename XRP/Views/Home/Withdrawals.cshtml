@@ -2,33 +2,33 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @model Users
 @using Newtonsoft.Json
+@{
+    Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+    ViewData["Title"] = "Withdrawal";
+}
 <link href="~/css/wi.css" rel="stylesheet" />
-<style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
 
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
 
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-</style>
-<div style="margin-top:80px" class="p-page__section theme--light  no-print" data-deep-link="ThreeActionCardsContainer" data-r-name="Three Action Cards Container" data-r-ds="Three Action Cards Container - New user support" data-r-rule="true">
-    <div class="p-page__section__outer">
-        <div class="p-page__section__inner ">
-            <div class="p-section__action-cards p-section__action-cards--3  p-page__section__child">
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+            </style>
 
                 <div style="text-align: center;" >
                     <h2 style="font-weight: bold; font-size: 28px;">Withdraw Money </h2>
                     <p>You can withdraw your money instantly.</p>
-                    <div class="card" style="margin-top: 20px;" id="bank">
+                    <div class="card container"  id="bank">
                         <div class="notes-title">Add Bank Details</div>
                         <form id="withdrawForm" class="bank-form">
                             <div class="form-row">
@@ -65,7 +65,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="container">
+
                         <!-- Left section -->
                         <div class="card">
                             <div class="balance-title">
@@ -135,12 +135,6 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="~/assets/toast/js/jquery.toast.js"></script>
@@ -151,10 +145,6 @@
 
     $(document).ready(function () {
         getIsUserHasBank();
-
-       
-
-        
     });
 
     function onclickWidthdraw() { 

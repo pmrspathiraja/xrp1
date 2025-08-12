@@ -1,6 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
+﻿@using XRP.Domain.Entity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+    ViewData["Title"] = "Privacy and policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+
+<div class="container">
+    <p>Larsen &amp; Toubro Limited ("L&amp;T") is committed to preserving your privacy and ensuring that your personal information is handled securely when you use our services. This policy describes how we collect, use, and disclose personal information on our websites, mobile applications, and other online platforms in over 50 countries, as well as how you may alter your preferences.</p>
+    <p>"Personal data" is defined as any information that identifies you as an individual, such as your name, contact information, IP address, device identifiers, location data, booking or transaction details, and any associated preferences or activities. We gather and process your personal data solely with your permission, as necessary to perform requested services, meet contractual commitments, comply with legal requirements, or for legitimate business objectives such as service enhancement, fraud protection, and customer support. When you book or conduct a transaction with an L&amp;T partner or supplier, your information will be treated in accordance with their privacy rules, which we will give for your reference. We may use your information to personalize your experience, answer to enquiries, confirm bookings, alert you of essential changes, improve our platforms, undertake market research, present relevant content or suggestions, and guarantee platform security. Data may also be anonymized and aggregated for analytical reasons in order to improve our products and inform business choices. Where applicable, we may securely send your data to trusted service providers and partners to provide services, with all required precautions in place.</p>
+    <p>If we make major changes to this policy, we will tell you through our platforms and other communication methods. You may withdraw your permission, request access to your data, and edit or delete your information at any time, subject to relevant regulations. By using our services, you recognize and agree to our Privacy Policy as part of the Terms of Service.</p>
+</div>
+
+

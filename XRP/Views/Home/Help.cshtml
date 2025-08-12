@@ -1,90 +1,15 @@
-﻿<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
-<script>
-    $(function () {
-        $("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
-        $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
-    });
-</script>
-<style>
-    .ui-tabs-vertical {
-        /* width: 55em; */
-    }
-
-        .ui-tabs-vertical .ui-tabs-nav {
-            padding: .2em .1em .2em .2em;
-           /*  float: left;
-            width: 12em; */
-        }
-
-            .ui-tabs-vertical .ui-tabs-nav li {
-                clear: left;
-                width: 100%;
-                border-bottom-width: 1px !important;
-                border-right-width: 0 !important;
-                margin: 0 -1px .2em 0;
-            }
-
-                .ui-tabs-vertical .ui-tabs-nav li a {
-                    display: block;
-                }
-
-                .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
-                    padding-bottom: 0;
-                    padding-right: .1em;
-                    border-right-width: 1px;
-                }
-
-        .ui-tabs-vertical .ui-tabs-panel {
-            padding: 1em;
-            float: left;
-            width: 100%;
-        }
-</style>
-<div style="margin-top:80px" class="p-page__section theme--light  no-print" data-deep-link="ThreeActionCardsContainer" data-r-name="Three Action Cards Container" data-r-ds="Three Action Cards Container - New user support" data-r-rule="true">
-    <div class="p-page__section__outer">
-        <div class="p-page__section__inner ">
-            <div class="p-section__action-cards p-section__action-cards--3  p-page__section__child">
-                <h1 style="font-weight:bold;margin-bottom:20px;color:darkblue">> Help</h1>
-                <div id="tabs">
-                    <ul>
-                        <li><a href="#tabs-1">Deposit Awareness</a></li>
-                        <li><a href="#tabs-2">Withdrawal Awareness</a></li>
-                        <li><a href="#tabs-3">What is a Prime shipment?</a></li>
-                        <li><a href="#tabs-4">Referral Program</a></li>
-                        <li><a href="#tabs-5">Pending & Hold</a></li>
-
-                    </ul>
-                    <div id="tabs-1" style="text-align:justify">
-                        <h2 style="font-weight:bold;font-size:20px">Deposit Awareness</h2>
-                        <br></br>
-                        <p>Deposit can be done at the “Shipping” Page and “Wallet” page. Click on the "Deposit" button to redirect to the online deposit customer service to assist in remittance Deposit. User’s can choose WhatsApp and Telegram to connect with customer care for more information and all financial related queries. After transferring the money according to the account provided by the customer service of the platform, make sure to submit the receipt or other relevant screenshots of the successful transfer to the account for the system verification purpose and Make sure the Beneficiary details of the person you're transferring to and the amount you're transferring are the same as what you're transferring. If you encounter any unsolvable problems during the Deposit process, please contact the on-duty online customer service. Due to a large amount of information, please make sure to check the Deposit account number of this platform carefully before making Deposit. The platform occasionally changes the Deposit account number. If you have any inquiries, please contact the platform online customer service.</p>
-                    </div>
-                    <div id="tabs-2" style="text-align:justify">
-                        <h2 style="font-weight:bold;font-size:20px">Withdrawal Awareness</h2>
-                        <br></br>
-                        <p>After completing each set of bookings users can withdraw once. So users can withdraw 1 times per day to their own bank account. Please bind your own bank information's correctly on the platform before you submit withdraw for receive the salary. Click the "Withdrawal" button after entering the amount you want to withdraw . The specific arrival time is subject to the bank's arrival time. Note: Withdraw time 9.30 am to 9.30 PM Minimum withdrawal amount is 500 rupees and Maximum withdrawal is 80 lakh and if you withdraw more than 3 lakh, you will need to pay a fees of 50% for the first time as verification of security purpose, the fees can be withdraw too after 1 hour of verification.When withdrawing first day the members can keep maximum 8,000 only.</p>
-                    </div>
-                    <div id="tabs-3" style="text-align:justify">
-                        <h2 style="font-weight:bold;font-size:20px">What is a Prime shipment?</h2>
-                        <br></br>
-                        <p>Logistic industries want to increase the exposure of their services, influence shipments and sales, increase popularity in the community and attract more agents to help create a push for their high-class services. This will help them increase sales and satisfied comments for future customers, thus creating the Prime shipments. A Prime shipment is a benefit to all members who earn more COMMISSIONS rather than normal shipments. Suppliers and merchants designed it so that members and agents can earn 2x commissions. It's exceptionally rare, agent may have a chances to encounter only 1 (Max) Prime shipment in per round shipment.</p>
-                    </div>
-                    <div id="tabs-4" style="text-align:justify">
-                        <h2 style="font-weight:bold;font-size:20px">Referral Program</h2>
-                        <br></br>
-                        <p>Once user continue the job for 14 days all users can invite others of the platform through own Invitation codes and also become your downline, as the upline you can extract 16% of the commission of the downline, the commission obtained by the upline will be directly returned to the upline's platform account, or you can also check the team report -You can get 16% of your Tier 1 agent's commission, 8% of your Tier 2 agent's commission and 4% of your Tier 3 agent's commission. All agents/downlines on the platform have the same commissions and rewards, and developing a team does not affect the commissions and rewards of the agents/downlines. In accordance to IRS(Indian Revenue Service), platform might request member to take the resposibility to process for certain withdrawal and income from platform. The final interpretation is belongs to &nbsp;Maersk Ltd.</p>
-                    </div>
-                    <div id="tabs-5" style="text-align:justify">
-                        <h2 style="font-weight:bold;font-size:20px">Pending & Hold</h2>
-                        <br></br>
-                        <p>Shipping are not submitted after receiving a Shipment will be in still in "Processing" All you need to do is click the "Ship Now" button to complete the outstanding order. Shipment will be temporarily frozen because the system has assigned you a Prime Shipment. After you complete the gold suite that shipment will be released and the user can continue with all the remaining shipping and proceed to the withdrawal process. Note: If you are unable to complete the Prime Shipment within 72 hours and do not obtain an extension from customer service, your account will be frozen.</p>
-                    </div>
-                </div>
+﻿@using XRP.Domain.Entity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+    ViewData["Title"] = "Help";
+}
 
 
-            </div>
-        </div>
-    </div>
+<div class="container">
+    <p><strong>1. Referral Program</strong> <br />Once user continue the job for 7 days all users will get an invitation code to refer others &amp; when join through own Invitation codes they become your downlines. As the upline consultants can extract 5% of the commission of the downline's. The commission obtained by the upline will be directly returned to the upline's platform account, or you can also check the team report also.</p>
+    <p>You can get 5% of your Tier 1 agent's commission, 3% of your Tier 2 agent's commission and 1% of your Tier 3 agent's commission. All agents &amp; downlines on the platform have the same commissions and rewards. The developing a team does not affect the commissions and rewards of the agents/downlines. In accordance to IRS(Indian Revenue Service), platform might request member to take the responsibility to process for certain withdrawal and income from platform. The final interpretation is belongs to Larsen &amp; Toubro Limited.</p>
+    <p><strong>2. Funding Awareness</strong><br />Deposit can be done at the "Accept Requests" Page and "Wallet" page. Click on the "Funding" button to redirect to the online Funding customer service to assist in remittance Funding. Users can choose Telegram to connect with customer support for more information and all financial related queries. After transferring the money according to the account provided by the customer service of the platform, make sure to submit the receipt or other relevant screenshots of the successful transfer to the account for the system verification purpose and Make sure the Beneficiary details of the person you're transferring to and the amount you're transferring are the same as what you're transferring. If you encounter any unsolvable problems during the Funding process, please contact the on-duty online customer service. Due to a large amount of information, please make sure to check the Funding account number of this platform carefully before make Funding. The platform occasionally changes the Funding account number. If you have any inquiries, please contact the platform online customer service.</p>
+    <p><strong>3. Fund-Out Awareness</strong><br />After accepted 36 property requests users can fund out once. So users can fund out 1 times per day to their own bank account. Please bind your own bank information's correctly on the platform before you submit fund out for receive the funds. Click the "Fund Out" button after entering the amount you want to fund out. The specific arrival time is subject to the bank's arrival time. (fund out time 9.30 AM to 9.30 PM) Minimum fund out amount is 500 rupees and Maximum fund out is 80 Lakh. If you fund out more than 3 lakh, you will need to pay a refundable fees of 50% for the first time as verification of security purpose. The fees can be receive too after 1 hour of verification.</p>
 </div>
+

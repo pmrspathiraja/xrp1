@@ -25,7 +25,7 @@
 
 
     <!-- SIDEBAR SECTION START -->
-    <div class="ul-sidebar">
+    <div id="side_bar" class="ul-sidebar">
         <!-- header -->
         <div class="ul-sidebar-header">
             <div class="ul-sidebar-header-logo">
@@ -389,6 +389,12 @@
                 $('#side_bar').removeClass('active');
             });
             $('#close_model1').on('click', function () {
+                $('#side_bar').removeClass('active');
+            });
+            $('#open_model').on('click', function () {
+                $('#side_bar').removeClass('active');
+            });
+            $('#open_model1').on('click', function () {
                 $('#side_bar').removeClass('active');
             });
         });

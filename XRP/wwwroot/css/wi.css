@@ -1,5 +1,4 @@
-﻿<style >
-/* Responsive container */
+﻿
 .container {
     display: flex;
     gap: 20px;
@@ -55,7 +54,7 @@ label {
     margin-bottom: 15px;
 }
 
-button {
+#withdrawButton {
     background: #ffc107;
     color: #fff;
     padding: 12px 20px;

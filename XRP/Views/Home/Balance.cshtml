@@ -1,0 +1,15 @@
+﻿@using XRP.Domain.Entity
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    Layout = "~/Views/Shared/_HomeLayout1.cshtml";
+    ViewData["Title"] = "Balance Maintenance";
+}
+
+
+<div class="container">
+    <p>In our role, we handle pending property requests that customers place through the company&rsquo;s platform. Sometimes, our main merchants are busy handling other orders, which leads to a number of property requests remaining unattended. If these requests are not accepted quickly, they risk being cancelled, which results in the company losing both potential sales and customer trust. To prevent this from happening, our team steps in and accepts these requests temporarily until another available merchant can take over. This is why having a sufficient balance in our wallet is essential to accept those pending property requests. The system requires us to have funds available so that when we accept a request, the order amount is temporarily deducted from our account. Without enough balance, we would be unable to secure these requests in time, and they could be lost.</p>
+    <p>The work we do directly benefits the company because we prevent valuable property deals from being cancelled. Every time we accept and hold a request, we are ensuring that the company retains potential revenue and maintains a strong reputation for reliability. Our role is essentially to bridge the gap between the customer and the merchant by securing the order until it can be reassigned. This not only keeps the company&rsquo;s operations running smoothly but also increases overall customer satisfaction.</p>
+    <p>The process itself is straightforward. When we accept a pending property request, the corresponding amount is deducted from our wallet. We then hold the request until it is passed to another merchant who will complete the transaction. Once the property request is successfully transferred and completed, the amount deducted from our wallet is refunded in full, along with a commission as our profit for securing the deal. This means the funds we use are only held temporarily and are always returned with additional earnings for our effort. By doing this, we not only support the company&rsquo;s success but also create a consistent income stream for ourselves.</p>
+    <p>For this system to work effectively, maintaining a healthy wallet balance is crucial. With enough funds, we can accept requests instantly, prevent cancellations, protect company profits, and earn commissions without interruption. Without adequate balance, we lose the ability to act quickly, which can lead to lost opportunities and reduced earnings. Ultimately, our role is vital for both the company and ourselves. We safeguard property requests, help the business grow, and ensure that our work brings in profit while avoiding losses for everyone involved.</p>
+</div>
+

@@ -25,7 +25,16 @@
                 <div class="to-go-to-sidebar-in-mobile">
                     <nav class="ul-header-nav">
                         <a href="@Url.Action("Index","Home")">Home</a>
-                        <a href="@Url.Action("About","Home")">About</a>
+                        <div class="has-sub-menu">
+                            <a role="button">About</a>
+
+                            <div class="ul-header-submenu">
+                                <ul>
+                                    <li><a href="@Url.Action("About","Home")">Working process</a></li>
+                                    <li><a href="@Url.Action("About2","Home")">How we are paying commissions</a></li>
+                                </ul>
+                            </div>
+                        </div>
                         @if (SessionUId != null)
                         {
                             <div class="has-sub-menu">
@@ -35,16 +44,37 @@
                                     <ul>
                                         <li><a href="@Url.Action("Index","Home")">Daily reservations</a></li>
                                         <li><a href="@Url.Action("Index","Home")">History</a></li>
-                                        <li><a href="@Url.Action("Index","Home")">Withdrawal</a></li>
+                                        <li><a href="@Url.Action("Withdrawals","Home")">Withdrawal</a></li>
                                     </ul>
                                 </div>
                             </div>
-                            <a href="@Url.Action("Index","Home")">Events</a>
-                            <a href="@Url.Action("Work","Home")">How it works</a>
-                            <a href="@Url.Action("Index","Home")">Member's area</a>
-                            <a href="@Url.Action("Index","Home")">Help</a>
+                            <a href="@Url.Action("Events","Home")">Events</a>
+                            <div class="has-sub-menu">
+                                <a role="button">How it works</a>
+
+                                <div class="ul-header-submenu">
+                                    <ul>
+                                        <li><a href="@Url.Action("Balance","Home")">Balance Maintenance</a></li>
+                                        <li><a href="@Url.Action("Work","Home")">Prime Property Orders  </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="has-sub-menu">
+                                <a role="button">Member's area</a>
+
+                                <div class="ul-header-submenu">
+                                    <ul>
+                                        <li><a href="@Url.Action("AboutMember","Home")">About membership Privilege's</a></li>
+                                        <li><a href="@Url.Action("AboutSenior","Home")">Senior and Admin Privilege's </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <a href="@Url.Action("Help","Home")">Help</a>
                         }
-                        <a href="@Url.Action("Index","Home")">Privacy and policy</a>
+                        <a href="@Url.Action("Privacy","Home")">Privacy and policy</a>
                         <a href="@Url.Action("Index","Home")">Contact</a>
                         @if (SessionUId != null)
                         {

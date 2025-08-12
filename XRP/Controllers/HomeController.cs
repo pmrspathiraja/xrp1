@@ -185,8 +185,36 @@ namespace XRP.Controllers
             return View();
         }
 
+        public IActionResult About2()
+        {
+            return View();
+        }
+        [Authorize]
+        public IActionResult Balance()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult AboutSenior()
+        {
+            return View();
+        }
+
+
+        public IActionResult AboutMember()
+        {
+            return View();
+        }
+
         [Authorize]
         public IActionResult Work()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Events()
         {
             return View();
         }
