@@ -315,6 +315,18 @@ namespace XRP.Controllers
             return View();
         }
 
+        [Authorize]
+        public IActionResult PropertyRequests()
+        {
+            var userId = HttpContext.Session.GetString("UId");
+            if (userId is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+
 
         [HttpGet]
         public async Task<JsonResult> GetBookings()
