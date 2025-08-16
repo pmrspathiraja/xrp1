@@ -230,7 +230,8 @@ namespace XRP.DataAccess.Repository.User
                             Active = true,
                             Commision = booking.Commision,
                             Price = booking.Price,
-                            Stage = 1
+                            Stage = 1,
+                            XRate=1
 
                         };
 

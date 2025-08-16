@@ -6,15 +6,15 @@
     <div class="ul-project">
         <div class="ul-project-img"><img src="~/assets/img/prop/prop1.jpg" alt="Project Image"></div>
         <div class="ul-project-txt">
-            <span class="ul-project-tag">Regular Property | x1 Commission</span>
+            <span class="ul-project-tag">Regular Property | x<span id="xrate">2</span> Commission</span>
             <div class="top">
                 <div class="left">
-                    <a href="project-details.html" class="ul-project-title">The One Galle Face Hotel Residence</a>
-                    <p class="ul-project-location"><b>Property Description :</b> A high-rise luxury apartment complex with 51 floors and 390 sophisticated residences</p>
-                    <p class="ul-project-location"><b>Order Number :</b> DFLJAFLGM5421FD</p>
-                    <p class="ul-project-location"><b>Assigned Time :</b> 2025-09-05 12:13:00</p>
-                    <p class="ul-project-location ul-project-price"><b>Unit Worth  :</b> <span class="number">₹4500,000,00.00</span></p>
-                    <p class="ul-project-location ul-project-price"><b>Commision  :</b> <span class="number">₹4500,000,00.00</span></p>
+                    <a href="project-details.html" class="ul-project-title"><span id="booking_title">.....</span></a>
+                    <p class="ul-project-location"><b>Property Description :</b> <span id="booking_desc">.....</span></p>
+                    <p class="ul-project-location"><b>Order Number :</b><span id="b_order"></span> DFLJAFLGM5421FD</p>
+                    <p class="ul-project-location"><b>Assigned Time :</b> <span id="assigned-time">2025-09-05 12:13:00</span></p>
+                    <p class="ul-project-location ul-project-price"><b>Unit Worth  :</b> ₹<span class="number" id="b_price">₹4500,000,00.00</span></p>
+                    <p class="ul-project-location ul-project-price"><b>Commision  :</b> ₹<span class="number" id="b_commision">₹4500,000,00.00</span></p>
                     
                 </div>
                 <div class="right">
@@ -46,64 +46,225 @@
         </div>
     </div>
 </div>
-@* <section class="ul-facilities ul-section-spacing">
-    <div class="ul-container">
-        <div class="row ul-bs-row row-cols-lg-2 row-cols-1 wow animate__fadeInUp">
-            <!-- text -->
-            <div class="col">
-                <div class="ul-facilities-txt">
-                    <h6 class="ul-section-sub-title">Our Top Facilities</h6>
-                    <h2 class="ul-section-title">Making living spaces More Beautiful</h2>
-                    <p class="ul-facilities-descr">Over 39,000 people work for us in more than 70 countries all over the This breadth of global coverage, combined with specialist services</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
 
-                    <div class="ul-facilities-stats">
-                        <!-- single stat -->
-                        <div class="ul-facilities-stat">
-                            <span class="number">80%</span>
-                            <span class="txt">Completed Property</span>
-                        </div>
-                        <!-- single stat -->
-                        <div class="ul-facilities-stat">
-                            <span class="number">99%</span>
-                            <span class="txt">Satisfied Customers</span>
-                        </div>
-                        <!-- single stat -->
-                        <div class="ul-facilities-stat">
-                            <span class="number">50%</span>
-                            <span class="txt">Home ownership</span>
-                        </div>
-                    </div>
+    // Get the element
+    const timeElement = document.getElementById('assigned-time');
 
-                    <div class="ul-facilities-list">
-                        <ul>
-                            <li>Living rooms are pre-wired for Surround</li>
-                            <li>Luxurious interior design and amenities</li>
-                            <li>Private balconies with stunning views</li>
-                            <li>A rare combination of inspired architecture</li>
-                        </ul>
-                    </div>
+    // Parse the date string
+    const dateStr = timeElement.textContent; // "2025-09-05 12:13:00"
+    const dateObj = new Date(dateStr);
 
-                    <div class="ul-facilities-img-slider-wrapper">
-                        <div class="ul-facilities-img-slider-nav ul-slider-nav">
-                            <button class="prev"><i class="flaticon-arrow"></i></button>
-                            <button class="next"><i class="flaticon-right-arrow"></i></button>
-                        </div>
-                        <div class="ul-facilities-img-slider swiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="~/assets/img/project-1.jpg" alt="Facility Image"></div>
-                                <div class="swiper-slide"><img src="~/assets/img/project-2.jpg" alt="Facility Image"></div>
-                                <div class="swiper-slide"><img src="~/assets/img/project-3.jpg" alt="Facility Image"></div>
-                                <div class="swiper-slide"><img src="~/assets/img/project-4.jpg" alt="Facility Image"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    // Format the date (example: "September 5, 2025, 12:13 PM")
+    const options = {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: 'numeric', minute: 'numeric', second: 'numeric',
+        hour12: true
+    };
+    const formattedDate = dateObj.toLocaleString('en-US', options);
 
-            <!-- img -->
-            <div class="col">
-                <div class="ul-facilities-img"><img src="~/assets/img/facility-img.jpg" alt="Facility Image"></div>
-            </div>
-        </div>
-    </div>
-</section> *@
+    // Display formatted date
+    timeElement.textContent = formattedDate;
+    var process = false;
+    var currentBookingId;
+    var isBookingAvailable=false;
+
+    function generateRandomOrderNumber(length = 16) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+    function generateContainers(length = 4) {
+        const chars = '1234';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    function generateCartoons(length = 4) {
+        const chars = '1234';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    let isBookingInProgress = false;
+
+    function BookOrder(button) {
+        if (isBookingInProgress) return; // Prevent re-entry
+        isBookingInProgress = true;
+        $("#overlay").fadeIn(100);
+        button.style.display = 'none';
+        button.innerText = "Processing...";
+
+        const bookingData = {
+            BookingAllocationId: currentBookingId
+        };
+
+        $.ajax({
+            url: '/Home/BookOrder',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(bookingData),
+            success: function (response) {
+                isBookingInProgress = false;
+
+                if (response.success) {
+                    $('#modalDialog').fadeOut();
+                    FirstBookingLoad();
+                    button.innerText = "Ship Now";
+                    button.style.display = 'inline-block';
+                    $("#overlay").fadeOut(2000);
+                } else {
+                    $('#loginError').text('Booking failed.').show();
+                    button.disabled = false;
+                    button.style.display = 'inline-block';
+                    $("#overlay").fadeOut(2000);
+                }
+            },
+            error: function () {
+                isBookingInProgress = false;
+
+                $('#loginError').text('An error occurred. Please try again.').show();
+                button.style.display = 'inline-block';
+                button.innerText = "Ship Now";
+                $("#overlay").fadeOut(2000);
+            }
+        });
+    }
+
+    function FirstBookingLoad() {
+
+        $.ajax({
+            url: '/Home/GetBookings',
+
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+
+                if (response.success) {
+                    // if (response.data.giftPrecentage > 0) {
+                    //     var modal = $('#modalDialogWin');
+                    //     $('#pre').text(response.data.giftPrecentage);
+                    //     modal.show()
+                    // }
+                    $('#xrate').text(response.data.xRate);
+                    $('#booking_title').text(response.data.bookings.title);
+                    $('#booking_desc').text(response.data.bookings.description);
+                    const orderNumber = generateRandomOrderNumber();
+                    $('#b_order').text(orderNumber);
+                    $('#b_price').text(response.data.price + ".00");
+                    $('#b_commision').text(response.data.commision + ".00");
+
+                   // $('#booking_title').text(response.data.bookings.title);
+                    $('#t_bonus').text(response.users.levelBonus);
+                    $('#t_balance').text(response.users.totalBalance);
+                    $('#t_commision').text(response.users.todayCommission);
+                    
+                    $('#t_pending').text(response.users.pendingAmount);
+                    $('#b_count').text(response.users.bookingCount);
+
+                    currentBookingId = response.data.uId;
+
+                    //Booking model
+                    $('#b_info').text(response.data.bookings.title);
+
+                    $('#b_details').text(response.data.bookings.description);
+                    
+                    const countcount = generateContainers();
+                    $('#cont_count').text(countcount);
+
+                    const countcar = generateCartoons();
+                    $('#car_count').text(countcar);
+                    $('#ratings').val('0');
+                    $('#bookingbtn').hide();
+
+                } else {
+
+                    var totalbalance = response.users.totalBalance;
+                    var text = 'Your balance : ' + totalbalance + '';
+
+                    if (response.users.popupMessage != "" && response.users.popupMessage!=null) {
+                        $('#modelb').html('<p><b>' + response.users.popupMessage + '</b><br><span style="color:red"><b>' + text + '</b></span></p>');
+
+                    } else {
+                        $('#modelb').html('<p><b>No bookings available at the moment. For assistance, please reach out to our customer support team. We’re here to help!</b><br><span style="color:red"><b>' + text + '</b></span></p>');
+
+                    }
+
+
+                    $('#bookingbtn').hide();
+                    $('#t_bonus').text(response.users.levelBonus);
+                    $('#t_balance').text(response.users.totalBalance);
+                    $('#t_commision').text(response.users.todayCommission);
+                    $('#t_pending').text(response.users.pendingAmount);
+                    $('#b_count').text(response.users.bookingCount);
+                    const countcount = generateContainers();
+                    $('#cont_count').text(countcount);
+
+                    const countcar = generateCartoons();
+                    $('#car_count').text(countcar);
+
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+
+
+        $('#bookingbtn').hide();
+
+        // Listen for rating dropdown change
+        $('#ratings').on('change', function () {
+            const selected = $(this).val();
+            if (selected !== "0") {
+                $('#bookingbtn').show();  // Show when valid rating selected
+            } else {
+                $('#bookingbtn').hide();  // Hide again if "Select Rating" is chosen
+            }
+        });
+
+        var modal = $('#modalDialog');
+        var modal1 = $('#modalDialogWin');
+        var btn = $("#mbtn");
+        var span = $(".close");
+        var span1 = $(".closewin");
+        var booking = $(".booking");
+
+        btn.on('click', function () {
+            modal.show();
+        });
+
+        span.on('click', function () {
+            modal.fadeOut();
+        });
+
+        span1.on('click', function () {
+            modal1.fadeOut();
+        });
+
+        $('body').bind('click', function (e) {
+            if ($(e.target).hasClass("modal")) {
+                modal.fadeOut();
+            }
+        });
+
+        FirstBookingLoad();
+
+    });
+
+
+
+</script>

@@ -19,7 +19,8 @@ namespace XRP.Domain.Entity
         public decimal Price { get; set; }
         public decimal GiftPrecentage { get; set; }
         public int Stage { get; set; }
-        
+        public int XRate { get; set; }
+
 
         public virtual Bookings Bookings { get; set; } = null!;
         public virtual Users Users { get; set; } = null!;
